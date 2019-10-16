@@ -1,6 +1,9 @@
 package com.codeoftheweb.salvo;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -28,6 +31,7 @@ public class Player {
 
     }
 
+    @JsonProperty("email")
     public String getUserName() {
         return userName;
     }
@@ -47,7 +51,7 @@ public class Player {
     public Map<String, Object> makePlayerDTO(Player player) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", player.getId());
-        dto.put("emails", player.getUserName());
+        dto.put("email", player.getUserName());
         return dto;
     }
 
