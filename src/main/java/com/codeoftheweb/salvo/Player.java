@@ -2,10 +2,8 @@ package com.codeoftheweb.salvo;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -15,10 +13,12 @@ public class Player {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
     private String userName;
+    @OneToMany(mappedBy="player", fetch=FetchType.EAGER)
+    Set<GamePlayer> games;
+    public Player() {
+    }
 
-    public Player(){}
-
-    public Player (String userName){
+    public Player(String userName) {
         this.userName = userName;
 
     }
@@ -26,6 +26,7 @@ public class Player {
     public String getUserName() {
         return userName;
     }
+
     public Long getId() {
         return id;
     }
@@ -34,7 +35,7 @@ public class Player {
         this.userName = userName;
     }
 
-    public String toString() {
-        return userName + " " ;
+    public Set<GamePlayer> getGames() {
+        return games;
     }
 }
