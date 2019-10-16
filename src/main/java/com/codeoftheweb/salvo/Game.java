@@ -1,5 +1,6 @@
 package com.codeoftheweb.salvo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -15,7 +16,8 @@ public class Game {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
     private LocalDateTime creationDate = LocalDateTime.now();
-    @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
+    @JsonIgnore
     Set<GamePlayer> players;
 
     public Game() {
@@ -36,10 +38,12 @@ public class Game {
     public Set<GamePlayer> getPlayers() {
         return players;
     }
-    public  Map<String, Object> makeGameDTO(Game game) {
+
+    public Map<String, Object> makeGameDTO(Game game) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", game.getId());
         dto.put("created", game.getCreationDate());
+        dto.put("gamePlayers", game.getPlayers());
         return dto;
     }
 
