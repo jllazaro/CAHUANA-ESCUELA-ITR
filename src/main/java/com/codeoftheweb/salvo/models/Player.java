@@ -1,9 +1,7 @@
-package com.codeoftheweb.salvo;
+package com.codeoftheweb.salvo.models;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

@@ -1,11 +1,13 @@
-package com.codeoftheweb.salvo;
+package com.codeoftheweb.salvo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Entity
 public class GamePlayer {
@@ -23,6 +25,9 @@ public class GamePlayer {
     @JsonIgnore
     private Game game;
 
+    @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
+    private Set<Ship> ships = new HashSet<>();
+
     public GamePlayer() {
     }
 
@@ -30,6 +35,7 @@ public class GamePlayer {
         this.game = game;
         this.player = player;
     }
+
     public Map<String, Object> makeGamePlayerDTO(GamePlayer gamePlayer) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", gamePlayer.getId());
@@ -47,5 +53,9 @@ public class GamePlayer {
 
     public Game getGame() {
         return game;
+    }
+
+    public void addShip(Ship ship) {
+        ships.add(ship);
     }
 }
