@@ -14,6 +14,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @SpringBootApplication
 public class SalvoApplication {
@@ -37,9 +39,9 @@ public class SalvoApplication {
             game2.setCreationDate(LocalDateTime.now().plusHours(1));
             game3.setCreationDate(LocalDateTime.now().plusHours(2));
 
-            Ship ship1 = new Ship("cruiser","A1");
-            Ship ship2 = new Ship("destroyer","A2");
-            Ship ship3 = new Ship("battleship","A3");
+            Ship ship1 = new Ship("cruiser",  Arrays.asList("A1","A2","A3"));
+            Ship ship2 = new Ship("destroyer",Arrays.asList("B1","B2","B3"));
+            Ship ship3 = new Ship("battleship",Arrays.asList("C1","C2","C3"));
 
             GamePlayer gamePlayer1 = new GamePlayer(game1, player1);
             GamePlayer gamePlayer2 = new GamePlayer(game1, player2);

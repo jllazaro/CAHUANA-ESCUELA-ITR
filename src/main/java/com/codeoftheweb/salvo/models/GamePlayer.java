@@ -36,10 +36,10 @@ public class GamePlayer {
         this.player = player;
     }
 
-    public Map<String, Object> makeGamePlayerDTO(GamePlayer gamePlayer) {
+    public Map<String, Object> makeGamePlayerDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
-        dto.put("id", gamePlayer.getId());
-        dto.put("player", gamePlayer.getPlayer().makePlayerDTO(this.getPlayer()));
+        dto.put("id", this.getId());
+        dto.put("player", this.getPlayer());
         return dto;
     }
 

@@ -39,11 +39,11 @@ public class Game {
         return players;
     }
 
-    public Map<String, Object> makeGameDTO(Game game) {
+    public Map<String, Object> makeGameDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
-        dto.put("id", game.getId());
-        dto.put("created", game.getCreationDate());
-        dto.put("gamePlayers", game.getPlayers());
+        dto.put("id", this.getId());
+        dto.put("created", this.getCreationDate());
+        dto.put("gamePlayers", this.getPlayers());
         return dto;
     }
 

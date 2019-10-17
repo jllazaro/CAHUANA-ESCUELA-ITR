@@ -3,8 +3,7 @@ package com.codeoftheweb.salvo.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Ship {
@@ -13,48 +12,18 @@ public class Ship {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
     @ElementCollection
-    private Set<String> locations = new HashSet<>();
+    private List<String> locations = new ArrayList<>();
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="gamePlayer_id")
+    @JoinColumn(name = "gamePlayer_id")
     private GamePlayer gamePlayer;
     private String type;
 
     public Ship() {
     }
-    public Ship(String type, String location) {
-        this.type= type;
-        this.locations.add(location);
-    }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Set<String> getLocations() {
-        return locations;
-    }
-
-    public void setLocations(Set<String> locations) {
-        this.locations = locations;
-    }
-
-//    public GamePlayer getGamePlayer() {
-//        return gamePlayer;
-//    }
-//
-//    public void setGamePlayer(GamePlayer gamePlayer) {
-//        this.gamePlayer = gamePlayer;
-//    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
+    public Ship(String type, List<String> location) {
         this.type = type;
+        this.locations =  location;
     }
+
 }
