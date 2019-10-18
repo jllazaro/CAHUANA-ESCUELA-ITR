@@ -94,8 +94,12 @@ public class SalvoApplication {
             shipRepository.save(ship7);
             shipRepository.save(ship8);
             salvoRepository.save(salvo1);
+            salvoRepository.save(salvo2);
+            salvoRepository.save(salvo3);
             salvoRepository.save(salvo4);
             salvoRepository.save(salvo5);
+            salvoRepository.save(salvo6);
+            salvoRepository.save(salvo7);
             salvoRepository.save(salvo8);
 
         };
