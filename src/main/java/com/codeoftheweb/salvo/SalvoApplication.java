@@ -39,19 +39,28 @@ public class SalvoApplication {
             game2.setCreationDate(LocalDateTime.now().plusHours(1));
             game3.setCreationDate(LocalDateTime.now().plusHours(2));
 
-            Ship ship1 = new Ship("cruiser", Arrays.asList("A1", "A2", "A3"));
-            Ship ship2 = new Ship("destroyer", Arrays.asList("B1", "B2", "B3"));
+            Ship ship1 = new Ship("cruiser", Arrays.asList("A8", "A9", "A10"));
+            Ship ship2 = new Ship("destroyer", Arrays.asList("D3", "E3", "F3"));
             Ship ship3 = new Ship("battleship", Arrays.asList("C1", "C2", "C3"));
+            Ship ship4 = new Ship("cruiser", Arrays.asList("G8", "G9", "G10"));
+            Ship ship5 = new Ship("destroyer", Arrays.asList("H3", "I3", "J3"));
+            Ship ship6 = new Ship("battleship", Arrays.asList("D1", "D2", "D3"));
+            Ship ship7 = new Ship("cruiser", Arrays.asList("F8", "F9", "F10"));
+            Ship ship8 = new Ship("destroyer", Arrays.asList("A3", "B3", "C3"));
 
             GamePlayer gamePlayer1 = new GamePlayer(game1, player1);
             GamePlayer gamePlayer2 = new GamePlayer(game1, player2);
             GamePlayer gamePlayer3 = new GamePlayer(game2, player3);
             GamePlayer gamePlayer4 = new GamePlayer(game2, player4);
-            GamePlayer gamePlayer5 = new GamePlayer(game3, player2);
-            GamePlayer gamePlayer6 = new GamePlayer(game3, player3);
             gamePlayer1.addShip(ship1);
             gamePlayer1.addShip(ship2);
-            gamePlayer1.addShip(ship3);
+            gamePlayer2.addShip(ship3);
+            gamePlayer2.addShip(ship4);
+            gamePlayer3.addShip(ship5);
+            gamePlayer3.addShip(ship6);
+            gamePlayer4.addShip(ship7);
+            gamePlayer4.addShip(ship8);
+
 
 
             playerRepository.save(player1);
@@ -66,11 +75,14 @@ public class SalvoApplication {
             gamePlayerRepository.save(gamePlayer2);
             gamePlayerRepository.save(gamePlayer3);
             gamePlayerRepository.save(gamePlayer4);
-            gamePlayerRepository.save(gamePlayer5);
-            gamePlayerRepository.save(gamePlayer6);
             shipRepository.save(ship1);
             shipRepository.save(ship2);
             shipRepository.save(ship3);
+            shipRepository.save(ship4);
+            shipRepository.save(ship5);
+            shipRepository.save(ship6);
+            shipRepository.save(ship7);
+            shipRepository.save(ship8);
 
         };
     }
