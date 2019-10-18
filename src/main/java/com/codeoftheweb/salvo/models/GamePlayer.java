@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class GamePlayer {
@@ -28,6 +29,9 @@ public class GamePlayer {
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Ship> ships = new HashSet<>();
+    @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<Salvo> salvoes = new HashSet<>();
 
     public GamePlayer() {
     }
@@ -60,12 +64,17 @@ public class GamePlayer {
         ship.setGamePlayer(this);
         ships.add(ship);
     }
+    public void addSalvo(Salvo salvo) {
+        salvo.setGamePlayer(this);
+        salvoes.add(salvo);
+    }
 
     public Set<Ship> getShips() {
         return ships;
     }
 
-    public void setShips(Set<Ship> ships) {
-        this.ships = ships;
+    public Set<Salvo> getSalvoes() {
+        return salvoes;
     }
+
 }

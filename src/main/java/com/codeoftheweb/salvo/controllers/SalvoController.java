@@ -6,6 +6,7 @@ import com.codeoftheweb.salvo.models.Player;
 import com.codeoftheweb.salvo.repositories.GamePlayerRepository;
 import com.codeoftheweb.salvo.repositories.GameRepository;
 import com.codeoftheweb.salvo.repositories.PlayerRepository;
+import com.codeoftheweb.salvo.repositories.SalvoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,8 @@ public class SalvoController {
     private GameRepository gameRepository;
     @Autowired
     private GamePlayerRepository gamePlayerRepository;
+    @Autowired
+    private SalvoRepository salvoRepository;
 
     @RequestMapping("api/gamesIds")
     public List<Object> getAllGamesIds() {
@@ -41,7 +44,7 @@ public class SalvoController {
     public Object getGamePlayerToPlayerId(@PathVariable Long gamePlayerId) {
          GamePlayer gamePLayerAux = gamePlayerRepository.findById(gamePlayerId).get();
 
-         return gameRepository.findById(gamePLayerAux.getGame().getId()).get().makeGameDTO_gameView(gamePLayerAux);
+         return gameRepository.findById(gamePLayerAux.getGame().getId()).get().makeGameDTO_gameViewWithSalvoes(gamePLayerAux);
 
     }
 }

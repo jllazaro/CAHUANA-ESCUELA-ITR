@@ -1,13 +1,7 @@
 package com.codeoftheweb.salvo;
 
-import com.codeoftheweb.salvo.models.Game;
-import com.codeoftheweb.salvo.models.GamePlayer;
-import com.codeoftheweb.salvo.models.Player;
-import com.codeoftheweb.salvo.models.Ship;
-import com.codeoftheweb.salvo.repositories.GamePlayerRepository;
-import com.codeoftheweb.salvo.repositories.GameRepository;
-import com.codeoftheweb.salvo.repositories.PlayerRepository;
-import com.codeoftheweb.salvo.repositories.ShipRepository;
+import com.codeoftheweb.salvo.models.*;
+import com.codeoftheweb.salvo.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,7 +19,7 @@ public class SalvoApplication {
     }
 
     @Bean
-    public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository) {
+    public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository, SalvoRepository salvoRepository) {
         return (args) -> {
             // save a couple of customers
             Player player1 = new Player("j.bauer@ctu.gov");
@@ -48,6 +42,15 @@ public class SalvoApplication {
             Ship ship7 = new Ship("cruiser", Arrays.asList("F8", "F9", "F10"));
             Ship ship8 = new Ship("destroyer", Arrays.asList("A3", "B3", "C3"));
 
+            Salvo salvo1 = new Salvo(1, Arrays.asList("A8", "A9"));
+            Salvo salvo2 = new Salvo(2, Arrays.asList("D3", "E3"));
+            Salvo salvo3 = new Salvo(3, Arrays.asList("C1", "C2"));
+            Salvo salvo4 = new Salvo(4, Arrays.asList("G8", "G9"));
+            Salvo salvo5 = new Salvo(1, Arrays.asList("H3", "I3"));
+            Salvo salvo6 = new Salvo(2, Arrays.asList("D1", "D2", "D3"));
+            Salvo salvo7 = new Salvo(3, Arrays.asList("F8", "F9", "F10"));
+            Salvo salvo8 = new Salvo(4, Arrays.asList("A3", "B3", "C3"));
+
             GamePlayer gamePlayer1 = new GamePlayer(game1, player1);
             GamePlayer gamePlayer2 = new GamePlayer(game1, player2);
             GamePlayer gamePlayer3 = new GamePlayer(game2, player3);
@@ -61,7 +64,14 @@ public class SalvoApplication {
             gamePlayer4.addShip(ship7);
             gamePlayer4.addShip(ship8);
 
-
+            gamePlayer1.addSalvo(salvo3);
+            gamePlayer1.addSalvo(salvo4);
+            gamePlayer2.addSalvo(salvo1);
+            gamePlayer2.addSalvo(salvo2);
+            gamePlayer3.addSalvo(salvo7);
+            gamePlayer3.addSalvo(salvo8);
+            gamePlayer4.addSalvo(salvo6);
+            gamePlayer4.addSalvo(salvo5);
 
             playerRepository.save(player1);
             playerRepository.save(player2);
@@ -83,6 +93,10 @@ public class SalvoApplication {
             shipRepository.save(ship6);
             shipRepository.save(ship7);
             shipRepository.save(ship8);
+            salvoRepository.save(salvo1);
+            salvoRepository.save(salvo4);
+            salvoRepository.save(salvo5);
+            salvoRepository.save(salvo8);
 
         };
     }

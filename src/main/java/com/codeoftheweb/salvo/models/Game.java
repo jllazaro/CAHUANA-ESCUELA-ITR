@@ -54,12 +54,23 @@ public class Game {
         dto.put("created", getCreationDate());
         return dto;
     }
+
     public Map<String, Object> makeGameDTO_gameView(GamePlayer gamePlayer) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", this.getId());
         dto.put("created", this.getCreationDate());
         dto.put("gamePlayers", this.getPlayers());
         dto.put("ships", gamePlayer.getShips());
+        return dto;
+    }
+
+    public Map<String, Object> makeGameDTO_gameViewWithSalvoes(GamePlayer gamePlayer) {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+        dto.put("id", this.getId());
+        dto.put("created", this.getCreationDate());
+        dto.put("gamePlayers", this.getPlayers());
+        dto.put("ships", gamePlayer.getShips());
+        dto.put("salvoes",  getPlayers().stream().flatMap(aGamePlayer -> aGamePlayer.getSalvoes().stream().map(salvo-> salvo.makeSalvoDTO())));
         return dto;
     }
 }
