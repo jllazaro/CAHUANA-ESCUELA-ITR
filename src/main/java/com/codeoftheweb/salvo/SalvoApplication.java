@@ -39,9 +39,9 @@ public class SalvoApplication {
             game2.setCreationDate(LocalDateTime.now().plusHours(1));
             game3.setCreationDate(LocalDateTime.now().plusHours(2));
 
-            Ship ship1 = new Ship("cruiser",  Arrays.asList("A1","A2","A3"));
-            Ship ship2 = new Ship("destroyer",Arrays.asList("B1","B2","B3"));
-            Ship ship3 = new Ship("battleship",Arrays.asList("C1","C2","C3"));
+            Ship ship1 = new Ship("cruiser", Arrays.asList("A1", "A2", "A3"));
+            Ship ship2 = new Ship("destroyer", Arrays.asList("B1", "B2", "B3"));
+            Ship ship3 = new Ship("battleship", Arrays.asList("C1", "C2", "C3"));
 
             GamePlayer gamePlayer1 = new GamePlayer(game1, player1);
             GamePlayer gamePlayer2 = new GamePlayer(game1, player2);
@@ -52,7 +52,6 @@ public class SalvoApplication {
             gamePlayer1.addShip(ship1);
             gamePlayer1.addShip(ship2);
             gamePlayer1.addShip(ship3);
-            gamePlayer2.addShip(ship1);
 
 
             playerRepository.save(player1);
@@ -62,15 +61,16 @@ public class SalvoApplication {
             gameRepository.save(game1);
             gameRepository.save(game2);
             gameRepository.save(game3);
-            shipRepository.save(ship1);
-            shipRepository.save(ship2);
-            shipRepository.save(ship3);
+
             gamePlayerRepository.save(gamePlayer1);
             gamePlayerRepository.save(gamePlayer2);
             gamePlayerRepository.save(gamePlayer3);
             gamePlayerRepository.save(gamePlayer4);
             gamePlayerRepository.save(gamePlayer5);
             gamePlayerRepository.save(gamePlayer6);
+            shipRepository.save(ship1);
+            shipRepository.save(ship2);
+            shipRepository.save(ship3);
 
         };
     }

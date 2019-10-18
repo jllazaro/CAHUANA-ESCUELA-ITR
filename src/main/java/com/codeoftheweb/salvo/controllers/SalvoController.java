@@ -1,4 +1,6 @@
 package com.codeoftheweb.salvo.controllers;
+
+import com.codeoftheweb.salvo.models.Game;
 import com.codeoftheweb.salvo.models.GamePlayer;
 import com.codeoftheweb.salvo.models.Player;
 import com.codeoftheweb.salvo.repositories.GamePlayerRepository;
@@ -27,17 +29,19 @@ public class SalvoController {
                 .map(game -> game.getId())
                 .collect(Collectors.toList());
     }
+
     @RequestMapping("api/games")
     public List<Object> getAllGames() {
         return gameRepository.findAll().stream()
                 .map(game -> game.makeGameDTO())
                 .collect(Collectors.toList());
     }
-    @RequestMapping("api/game_view/{playerId}")
-    public Object getGamePlayerToPlayerId(@PathVariable Long playerId) {
-        return gameRepository.findAll().stream()
-                .map(game -> game.makeGameDTO())
-                .collect(Collectors.toList());
+
+    @RequestMapping("api/game_view/{gamePlayerId}")
+    public Object getGamePlayerToPlayerId(@PathVariable Long gamePlayerId) {
+         GamePlayer gamePLayerAux = gamePlayerRepository.findById(gamePlayerId).get();
+
+         return gameRepository.findById(gamePLayerAux.getGame().getId()).get().makeGameDTO_gameView(gamePLayerAux);
 
     }
 }

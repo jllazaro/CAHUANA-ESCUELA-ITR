@@ -26,6 +26,7 @@ public class GamePlayer {
     private Game game;
 
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Ship> ships = new HashSet<>();
 
     public GamePlayer() {
@@ -56,6 +57,15 @@ public class GamePlayer {
     }
 
     public void addShip(Ship ship) {
+        ship.setGamePlayer(this);
         ships.add(ship);
+    }
+
+    public Set<Ship> getShips() {
+        return ships;
+    }
+
+    public void setShips(Set<Ship> ships) {
+        this.ships = ships;
     }
 }
