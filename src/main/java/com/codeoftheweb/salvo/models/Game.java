@@ -1,7 +1,4 @@
 package com.codeoftheweb.salvo.models;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -19,9 +16,6 @@ public class Game {
     private LocalDateTime creationDate = LocalDateTime.now();
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
     Set<GamePlayer> players;
-    @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
-    Set<Score> scores;
-
     public Game() {
     }
 
@@ -46,7 +40,6 @@ public class Game {
         dto.put("id", this.getId());
         dto.put("created", this.getCreationDate());
         dto.put("gamePlayers", this.getPlayers().stream().map(gp-> gp.makeGamePlayerDTO()));
-        dto.put("scores", this.getPlayers());
         return dto;
 }
 
@@ -54,8 +47,8 @@ public class Game {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", this.getId());
         dto.put("created", this.getCreationDate());
-        dto.put("gamePlayers", this.getPlayers());
-        dto.put("ships", gamePlayer.getShips());
+        dto.put("gamePlayers", this.getPlayers().stream().map(gp-> gp.makeGamePlayerDTO()));
+        dto.put("ships", gamePlayer.getShips().stream().map(ship-> ship.makeShipDTO()));
         dto.put("salvoes",  getPlayers().stream().flatMap(aGamePlayer -> aGamePlayer.getSalvoes().stream().map(salvo-> salvo.makeSalvoDTO())));
         return dto;
     }

@@ -1,6 +1,5 @@
 package com.codeoftheweb.salvo.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -46,17 +45,11 @@ public class Salvo {
         return turn;
     }
 
-    public void setTurn(Integer turn) {
-        this.turn = turn;
-    }
 
     public List<String> getLocations() {
         return locations;
     }
 
-    public void setLocations(List<String> locations) {
-        this.locations = locations;
-    }
     public Map<String, Object> makeSalvoDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("turn", this.getTurn());

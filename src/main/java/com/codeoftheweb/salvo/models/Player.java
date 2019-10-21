@@ -1,7 +1,5 @@
 package com.codeoftheweb.salvo.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -18,12 +16,7 @@ public class Player {
     private long id;
     private String userName;
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
-    @JsonIgnore
     private Set<GamePlayer> games;
-
-    @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
-    @JsonIgnore
-    private Set<Score> scores;
 
     public Player() {
     }
@@ -33,7 +26,6 @@ public class Player {
 
     }
 
-    @JsonProperty("email")
     public String getUserName() {
         return userName;
     }
@@ -42,16 +34,10 @@ public class Player {
         return id;
     }
 
-    public Map<String, Object> makePlayerDTO(Player player) {
+    public Map<String, Object> makePlayerDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
-        dto.put("id", player.getId());
-        dto.put("email", player.getUserName());
+        dto.put("id", this.getId());
+        dto.put("email", this.getUserName());
         return dto;
-    }
-
-    public Double getScore(Game game) {
-        return this.scores.stream()
-                .filter(score -> score.getGame().equals(game))
-                .findFirst().get().getScore();
     }
 }

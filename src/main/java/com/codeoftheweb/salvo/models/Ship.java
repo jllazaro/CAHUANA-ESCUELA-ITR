@@ -1,10 +1,12 @@
 package com.codeoftheweb.salvo.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 public class Ship {
@@ -15,7 +17,6 @@ public class Ship {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "gamePlayer_id")
-    @JsonIgnore
     private GamePlayer gamePlayer;
     private String type;
     @ElementCollection
@@ -28,27 +29,15 @@ public class Ship {
         this.locations =  location;
     }
 
-    public GamePlayer getGamePlayer() {
-        return gamePlayer;
-    }
 
     public void setGamePlayer(GamePlayer gamePlayer) {
         this.gamePlayer = gamePlayer;
     }
-
-    public String getType() {
-        return type;
+    public Map<String, Object> makeShipDTO() {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+        dto.put("type", this.type);
+        dto.put("locations", this.locations);
+        return dto;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public List<String> getLocations() {
-        return locations;
-    }
-
-    public void setLocations(List<String> locations) {
-        this.locations = locations;
-    }
 }

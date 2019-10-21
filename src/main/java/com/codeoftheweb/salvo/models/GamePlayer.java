@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
 public class GamePlayer {
@@ -23,14 +22,12 @@ public class GamePlayer {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "game_id")
-    @JsonIgnore
     private Game game;
 
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Ship> ships = new HashSet<>();
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
-    @JsonIgnore
     private Set<Salvo> salvoes = new HashSet<>();
 
     public GamePlayer() {
@@ -44,7 +41,7 @@ public class GamePlayer {
     public Map<String, Object> makeGamePlayerDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", this.getId());
-        dto.put("player", this.getPlayer());
+        dto.put("player", this.getPlayer().makePlayerDTO());
         return dto;
     }
 
@@ -78,7 +75,4 @@ public class GamePlayer {
         return salvoes;
     }
 
-    public Double getScore() {
-        return this.player.getScore(this.getGame());
-    }
 }
