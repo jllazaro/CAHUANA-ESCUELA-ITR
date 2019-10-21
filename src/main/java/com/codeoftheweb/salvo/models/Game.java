@@ -18,8 +18,9 @@ public class Game {
     private long id;
     private LocalDateTime creationDate = LocalDateTime.now();
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
-    @JsonIgnore
     Set<GamePlayer> players;
+    @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
+    Set<Score> scores;
 
     public Game() {
     }
@@ -44,25 +45,10 @@ public class Game {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", this.getId());
         dto.put("created", this.getCreationDate());
-        dto.put("gamePlayers", this.getPlayers());
+        dto.put("gamePlayers", this.getPlayers().stream().map(gp-> gp.makeGamePlayerDTO()));
+        dto.put("scores", this.getPlayers());
         return dto;
-    }
-
-    public Map<String, Object> toDTO() {
-        Map<String, Object> dto = new LinkedHashMap<String, Object>();
-        dto.put("id", getId());
-        dto.put("created", getCreationDate());
-        return dto;
-    }
-
-    public Map<String, Object> makeGameDTO_gameView(GamePlayer gamePlayer) {
-        Map<String, Object> dto = new LinkedHashMap<String, Object>();
-        dto.put("id", this.getId());
-        dto.put("created", this.getCreationDate());
-        dto.put("gamePlayers", this.getPlayers());
-        dto.put("ships", gamePlayer.getShips());
-        return dto;
-    }
+}
 
     public Map<String, Object> makeGameDTO_gameViewWithSalvoes(GamePlayer gamePlayer) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
@@ -73,4 +59,5 @@ public class Game {
         dto.put("salvoes",  getPlayers().stream().flatMap(aGamePlayer -> aGamePlayer.getSalvoes().stream().map(salvo-> salvo.makeSalvoDTO())));
         return dto;
     }
+
 }

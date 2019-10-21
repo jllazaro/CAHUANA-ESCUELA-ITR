@@ -64,6 +64,7 @@ public class GamePlayer {
         ship.setGamePlayer(this);
         ships.add(ship);
     }
+
     public void addSalvo(Salvo salvo) {
         salvo.setGamePlayer(this);
         salvoes.add(salvo);
@@ -77,4 +78,7 @@ public class GamePlayer {
         return salvoes;
     }
 
+    public Double getScore() {
+        return this.player.getScore(this.getGame());
+    }
 }

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -34,17 +36,22 @@ public class SalvoController {
     }
 
     @RequestMapping("api/games")
-    public List<Object> getAllGames() {
-        return gameRepository.findAll().stream()
+    public Object getAllGames() {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+        dto.put("player", "Guest");
+        dto.put("games", gameRepository.findAll().stream()
                 .map(game -> game.makeGameDTO())
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
+        return dto;
     }
 
     @RequestMapping("api/game_view/{gamePlayerId}")
     public Object getGamePlayerToPlayerId(@PathVariable Long gamePlayerId) {
-         GamePlayer gamePLayerAux = gamePlayerRepository.findById(gamePlayerId).get();
+        GamePlayer gamePLayerAux = gamePlayerRepository.findById(gamePlayerId).get();
 
-         return gameRepository.findById(gamePLayerAux.getGame().getId()).get().makeGameDTO_gameViewWithSalvoes(gamePLayerAux);
+        return gameRepository.findById(gamePLayerAux.getGame().getId()).get().makeGameDTO_gameViewWithSalvoes(gamePLayerAux);
 
     }
+
+
 }

@@ -19,7 +19,11 @@ public class Player {
     private String userName;
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
     @JsonIgnore
-    Set<GamePlayer> games;
+    private Set<GamePlayer> games;
+
+    @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<Score> scores;
 
     public Player() {
     }
@@ -38,14 +42,6 @@ public class Player {
         return id;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public Set<GamePlayer> getGames() {
-        return games;
-    }
-
     public Map<String, Object> makePlayerDTO(Player player) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", player.getId());
@@ -53,4 +49,9 @@ public class Player {
         return dto;
     }
 
+    public Double getScore(Game game) {
+        return this.scores.stream()
+                .filter(score -> score.getGame().equals(game))
+                .findFirst().get().getScore();
+    }
 }
