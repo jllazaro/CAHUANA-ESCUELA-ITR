@@ -75,4 +75,9 @@ public class GamePlayer {
         return salvoes;
     }
 
+    public Score getScore() {
+        return
+                player.getScore(this.getGame());
+    }
+
 }

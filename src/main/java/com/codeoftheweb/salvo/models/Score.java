@@ -25,11 +25,19 @@ public class Score {
     public Score() {
     }
 
+    public Score(Game game, Player player, Double score) {
+        this.game = game;
+        this.player = player;
+        this.score = score;
+        this.game.addScore(this);
+    }
+
     public Score(Game game, Player player, Double score, LocalDateTime finishDate) {
         this.game = game;
         this.player = player;
         this.score = score;
         this.finishDate = finishDate;
+        this.game.addScore(this);
     }
 
     public Map<String, Object> makeDTO() {

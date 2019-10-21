@@ -3,6 +3,7 @@ package com.codeoftheweb.salvo.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -41,5 +42,11 @@ public class Player {
         dto.put("id", this.getId());
         dto.put("email", this.getUserName());
         return dto;
+    }
+
+    public Score getScore(Game game) {
+        return scores.stream()
+                .filter(score -> score.getGame().getId() == game.getId())
+                .findFirst().orElse(null);
     }
 }
