@@ -21,18 +21,18 @@ public class Ship {
     private String type;
     @ElementCollection
     private List<String> locations = new ArrayList<>();
+
     public Ship() {
     }
 
     public Ship(String type, List<String> location) {
         this.type = type;
-        this.locations =  location;
+        this.locations = location;
     }
-
-
     public void setGamePlayer(GamePlayer gamePlayer) {
         this.gamePlayer = gamePlayer;
     }
+
     public Map<String, Object> makeShipDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("type", this.type);

@@ -18,9 +18,8 @@ public class SalvoApplication {
     }
 
     @Bean
-    public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository, SalvoRepository salvoRepository){//, ScoreRepository scoreRepository) {
+    public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository, SalvoRepository salvoRepository, ScoreRepository scoreRepository) {
         return (args) -> {
-            // save a couple of customers
             Player player1 = new Player("j.bauer@ctu.gov");
             Player player2 = new Player("c.obrian@ctu.gov");
             Player player3 = new Player("kim_bauer@gmail.com");
@@ -55,12 +54,12 @@ public class SalvoApplication {
             GamePlayer gamePlayer3 = new GamePlayer(game2, player3);
             GamePlayer gamePlayer4 = new GamePlayer(game2, player4);
 
-//            Score score1= new Score(game1,player1,1.00, LocalDateTime.now());
-//            Score score2= new Score(game1,player2,1.00, LocalDateTime.now());
-//            Score score3= new Score(game2,player3,1.00, LocalDateTime.now());
-//            Score score4= new Score(game2,player4,1.00, LocalDateTime.now());
-//            Score score5= new Score(game3,player2,1.00, LocalDateTime.now());
-//            Score score6= new Score(game3,player3,1.00, LocalDateTime.now());
+            Score score1 = new Score(game1, player1, 1.00, LocalDateTime.now());
+            Score score2 = new Score(game1, player2, 1.00, LocalDateTime.now());
+            Score score3 = new Score(game2, player3, 1.00, LocalDateTime.now());
+            Score score4 = new Score(game2, player4, 1.00, LocalDateTime.now());
+            Score score5 = new Score(game3, player2, 1.00, LocalDateTime.now());
+            Score score6 = new Score(game3, player3, 1.00, LocalDateTime.now());
 
 
             gamePlayer1.addShip(ship1);
@@ -109,12 +108,12 @@ public class SalvoApplication {
             salvoRepository.save(salvo6);
             salvoRepository.save(salvo7);
             salvoRepository.save(salvo8);
-//            scoreRepository.save(score1);
-//            scoreRepository.save(score2);
-//            scoreRepository.save(score3);
-//            scoreRepository.save(score4);
-//            scoreRepository.save(score5);
-//            scoreRepository.save(score6);
+            scoreRepository.save(score1);
+            scoreRepository.save(score2);
+            scoreRepository.save(score3);
+            scoreRepository.save(score4);
+            scoreRepository.save(score5);
+            scoreRepository.save(score6);
 
 
         };

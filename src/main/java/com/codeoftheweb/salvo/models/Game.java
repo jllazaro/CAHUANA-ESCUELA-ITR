@@ -15,7 +15,9 @@ public class Game {
     private long id;
     private LocalDateTime creationDate = LocalDateTime.now();
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
-    Set<GamePlayer> players;
+    private Set<GamePlayer> players;
+    @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
+    private Set<Score> scores;
     public Game() {
     }
 
