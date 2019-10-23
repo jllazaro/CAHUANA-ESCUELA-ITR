@@ -3,7 +3,6 @@ package com.codeoftheweb.salvo.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.Null;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -20,13 +19,14 @@ public class Player {
     private Set<GamePlayer> games;
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
     private Set<Score> scores;
+    private String password;
 
     public Player() {
     }
 
-    public Player(String userName) {
+    public Player(String userName, String password) {
         this.userName = userName;
-
+        this.password = password;
     }
 
     public String getUserName() {
@@ -48,5 +48,9 @@ public class Player {
         return scores.stream()
                 .filter(score -> score.getGame().getId() == game.getId())
                 .findFirst().orElse(null);
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
