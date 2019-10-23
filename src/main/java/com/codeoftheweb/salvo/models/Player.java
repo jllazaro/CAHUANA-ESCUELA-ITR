@@ -1,5 +1,6 @@
 package com.codeoftheweb.salvo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Player {
     private Set<GamePlayer> games;
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
     private Set<Score> scores;
+    @JsonIgnore
     private String password;
 
     public Player() {

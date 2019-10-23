@@ -184,7 +184,7 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(inputUserName -> {
-            Player player = playerRepository.findByUserName(inputUserName).get(0);
+            Player player = playerRepository.findByUserName(inputUserName);
             if (player != null) {
                 return new User(player.getUserName(), player.getPassword(),
                         AuthorityUtils.createAuthorityList("USER"));
@@ -202,8 +202,18 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+
+                .antMatchers("/api/players").permitAll()
+                .antMatchers("/api/games").permitAll()
+                .antMatchers("/console/**").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/web/**").permitAll()
-                .antMatchers("/**").hasAuthority("USER");
+                .antMatchers("/h2-console/**").permitAll()//allow h2 console access to admins only
+                .anyRequest().authenticated()//all other urls can be access by any authenticated role
+                .antMatchers("/rest/*").hasAuthority("USER")
+                .and().csrf().ignoringAntMatchers("/h2-console/**")//don't apply CSRF protection to /h2-console
+                .and().headers().frameOptions().sameOrigin();//allow use of frame to same origin urls
+
         http.formLogin()
                 .usernameParameter("name")
                 .passwordParameter("pwd")
