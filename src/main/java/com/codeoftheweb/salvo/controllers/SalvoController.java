@@ -43,7 +43,7 @@ public class SalvoController {
                 .collect(Collectors.toList());
     }
 
-    @RequestMapping("api/games")
+    @RequestMapping(path ="api/games")
     public Object getAllGames(Authentication authentication) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         if (isGuest(authentication)) {

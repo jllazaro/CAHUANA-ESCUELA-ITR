@@ -80,9 +80,9 @@ public class SalvoApplication {
             Salvo salvo8 = new Salvo(4, Arrays.asList("A3", "B3", "C3"));
 
             GamePlayer gamePlayer1 = new GamePlayer(game1, player1);
-            GamePlayer gamePlayer2 = new GamePlayer(game1, player2);
+//            GamePlayer gamePlayer2 = new GamePlayer(game1, player2);
             GamePlayer gamePlayer3 = new GamePlayer(game2, player3);
-            GamePlayer gamePlayer4 = new GamePlayer(game2, player4);
+//            GamePlayer gamePlayer4 = new GamePlayer(game2, player4);
             GamePlayer gamePlayer5 = new GamePlayer(game3, player3);
             GamePlayer gamePlayer6 = new GamePlayer(game3, player2);
             GamePlayer gamePlayer7 = new GamePlayer(game4, player1);
@@ -103,21 +103,21 @@ public class SalvoApplication {
 
             gamePlayer1.addShip(ship1);
             gamePlayer1.addShip(ship2);
-            gamePlayer2.addShip(ship3);
-            gamePlayer2.addShip(ship4);
+//            gamePlayer2.addShip(ship3);
+//            gamePlayer2.addShip(ship4);
             gamePlayer3.addShip(ship5);
             gamePlayer3.addShip(ship6);
-            gamePlayer4.addShip(ship7);
-            gamePlayer4.addShip(ship8);
+//            gamePlayer4.addShip(ship7);
+//            gamePlayer4.addShip(ship8);
 
             gamePlayer1.addSalvo(salvo3);
             gamePlayer1.addSalvo(salvo4);
-            gamePlayer2.addSalvo(salvo1);
-            gamePlayer2.addSalvo(salvo2);
+//            gamePlayer2.addSalvo(salvo1);
+//            gamePlayer2.addSalvo(salvo2);
             gamePlayer3.addSalvo(salvo7);
             gamePlayer3.addSalvo(salvo8);
-            gamePlayer4.addSalvo(salvo6);
-            gamePlayer4.addSalvo(salvo5);
+//            gamePlayer4.addSalvo(salvo6);
+//            gamePlayer4.addSalvo(salvo5);
 
             playerRepository.save(player1);
             playerRepository.save(player2);
@@ -131,9 +131,9 @@ public class SalvoApplication {
             gameRepository.save(game5);
 
             gamePlayerRepository.save(gamePlayer1);
-            gamePlayerRepository.save(gamePlayer2);
+//            gamePlayerRepository.save(gamePlayer2);
             gamePlayerRepository.save(gamePlayer3);
-            gamePlayerRepository.save(gamePlayer4);
+//            gamePlayerRepository.save(gamePlayer4);
             gamePlayerRepository.save(gamePlayer5);
             gamePlayerRepository.save(gamePlayer6);
             gamePlayerRepository.save(gamePlayer7);

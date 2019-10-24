@@ -58,7 +58,6 @@ public class Game {
         dto.put("salvoes", getPlayers().stream().flatMap(aGamePlayer -> aGamePlayer.getSalvoes().stream().map(salvo -> salvo.makeSalvoDTO())));
         return dto;
     }
-
     public void addScore(Score score) {
         this.scores.add(score);
     }
