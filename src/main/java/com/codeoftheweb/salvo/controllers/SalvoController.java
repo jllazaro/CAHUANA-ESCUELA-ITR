@@ -59,9 +59,11 @@ public class SalvoController {
     }
 
     @RequestMapping("api/game_view/{gamePlayerId}")
-    public Object getGamePlayerToPlayerId(@PathVariable Long gamePlayerId) {
+    public Object getGamePlayerToPlayerId(@PathVariable Long gamePlayerId, Authentication authentication) {
         GamePlayer gamePLayerAux = gamePlayerRepository.findById(gamePlayerId).get();
-
+        if (!(authentication.getName() == gamePLayerAux.getPlayer().getUserName())) {
+            return new ResponseEntity<>(makeMap("error", "UNAUTHORIZED "), HttpStatus.UNAUTHORIZED);
+        }
         return gameRepository.findById(gamePLayerAux.getGame().getId()).get().makeGameDTO_gameViewWithSalvoes(gamePLayerAux);
 
     }

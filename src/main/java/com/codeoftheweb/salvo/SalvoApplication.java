@@ -203,8 +203,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
 
-                .antMatchers("/api/players").permitAll()
-                .antMatchers("/api/games").permitAll()
+                .antMatchers("/api/**").permitAll()
+//                .antMatchers("/api/games").permitAll()
                 .antMatchers("/console/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/web/**").permitAll()

@@ -55,7 +55,7 @@ public class Game {
         dto.put("created", this.getCreationDate());
         dto.put("gamePlayers", this.getPlayers().stream().map(gp -> gp.makeGamePlayerDTO()));
         dto.put("ships", gamePlayer.getShips().stream().map(ship -> ship.makeShipDTO()));
-        dto.put("salvoes", getPlayers().stream().flatMap(aGamePlayer -> aGamePlayer.getSalvoes().stream().map(salvo -> salvo.makeSalvoDTO())));
+        dto.put("salvoes", getPlayers().stream().flatMap(gp -> gp.getSalvoes().stream().map(salvo -> salvo.makeSalvoDTO())));
         return dto;
     }
 
