@@ -46,6 +46,8 @@ public class Game {
         return dto;
     }
 
+    
+
     public Map<String, Object> makeGameDTO_gameViewWithSalvoes(GamePlayer gamePlayer) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", this.getId());
