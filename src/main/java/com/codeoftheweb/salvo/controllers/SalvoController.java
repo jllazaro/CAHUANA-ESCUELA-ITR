@@ -45,13 +45,13 @@ public class SalvoController {
     }
 
     @RequestMapping(path = "api/games")
-    public Object getAllGames(Authentication authentication) {
+    public Map<String, Object> getAllGames(Authentication authentication) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         if (isGuest(authentication)) {
             dto.put("player", "Guest");
         } else {
-
-            dto.put("player", playerRepository.findByUserName(authentication.getName()).makePlayerDTO());
+            Player player = playerRepository.findByUserName(authentication.getName());
+            dto.put("player", player != null ? player.makePlayerDTO() : null);
         }
         dto.put("games", gameRepository.findAll().stream()
                 .map(game -> game.makeGameDTO())
