@@ -1,5 +1,6 @@
 package com.codeoftheweb.salvo.controllers;
 
+import com.codeoftheweb.salvo.models.Game;
 import com.codeoftheweb.salvo.models.GamePlayer;
 import com.codeoftheweb.salvo.models.Player;
 import com.codeoftheweb.salvo.repositories.GamePlayerRepository;
@@ -43,7 +44,7 @@ public class SalvoController {
                 .collect(Collectors.toList());
     }
 
-    @RequestMapping(path ="api/games")
+    @RequestMapping(path = "api/games")
     public Object getAllGames(Authentication authentication) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         if (isGuest(authentication)) {
@@ -59,11 +60,45 @@ public class SalvoController {
     }
 
     @RequestMapping("api/game_view/{gamePlayerId}")
-    public Object getGamePlayerToPlayerId(@PathVariable Long gamePlayerId) {
+    public Map<String, Object> getGamePlayerToPlayerId(@PathVariable Long gamePlayerId) {
         GamePlayer gamePLayerAux = gamePlayerRepository.findById(gamePlayerId).get();
+        Game gameAux = gameRepository.findById(gamePLayerAux.getGame().getId()).get();
+        return gameAux.makeGameDTO_gameViewWithSalvoes(gamePLayerAux);
 
-        return gameRepository.findById(gamePLayerAux.getGame().getId()).get().makeGameDTO_gameViewWithSalvoes(gamePLayerAux);
+    }
 
+    @RequestMapping(path = "api/games", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> createGame(Authentication authentication) {
+        if (isGuest(authentication)) {
+            return new ResponseEntity<>(makeMap("error", "Enter a password "), HttpStatus.UNAUTHORIZED);
+        }
+        Player logged = playerRepository.findByUserName(authentication.getName());
+        Game gameNew = new Game();
+        GamePlayer gamePlayerNew = new GamePlayer(gameNew, logged);
+        gameRepository.save(gameNew);
+        gamePlayerRepository.save(gamePlayerNew);
+
+        return new ResponseEntity<>(makeMap("gpid", gamePlayerNew.getId()), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(path = "api/game/{gameId}/players", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> gameOfPlayer(@PathVariable Long gameId, Authentication authentication) {
+        if (isGuest(authentication)) {
+            return new ResponseEntity<>(makeMap("error", "Enter a password "), HttpStatus.FORBIDDEN);
+        }
+        Game game = gameRepository.findById(gameId).get();
+        if (game.equals(null)) {
+            return new ResponseEntity<>(makeMap("error", "No such game"), HttpStatus.FORBIDDEN);
+        }
+        if (game.getPlayers().size() > 1) {
+            return new ResponseEntity<>(makeMap("error", "Game is full"), HttpStatus.FORBIDDEN);
+        }
+        Player logged = playerRepository.findByUserName(authentication.getName());
+
+        GamePlayer gamePlayerNew = new GamePlayer(game, logged);
+        gamePlayerRepository.save(gamePlayerNew);
+
+        return new ResponseEntity<>(makeMap("gpid", game.getId()), HttpStatus.CREATED);
     }
 
     @RequestMapping(path = "/api/players", method = RequestMethod.POST)

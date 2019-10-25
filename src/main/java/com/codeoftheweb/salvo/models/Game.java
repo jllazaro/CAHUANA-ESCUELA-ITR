@@ -4,10 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Game {
@@ -17,7 +14,7 @@ public class Game {
     private long id;
     private LocalDateTime creationDate = LocalDateTime.now();
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
-    private Set<GamePlayer> players;
+    private Set<GamePlayer> players = new HashSet<>();
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
     private Set<Score> scores = new HashSet<>();
 
@@ -53,11 +50,21 @@ public class Game {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", this.getId());
         dto.put("created", this.getCreationDate());
+        dto.put("gameState", "PLACESHIPS");
         dto.put("gamePlayers", this.getPlayers().stream().map(gp -> gp.makeGamePlayerDTO()));
         dto.put("ships", gamePlayer.getShips().stream().map(ship -> ship.makeShipDTO()));
         dto.put("salvoes", getPlayers().stream().flatMap(aGamePlayer -> aGamePlayer.getSalvoes().stream().map(salvo -> salvo.makeSalvoDTO())));
+        dto.put("hits", this.hits());
         return dto;
     }
+
+    private Map<String, Object> hits() {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+        dto.put("self", new ArrayList<Objects>());
+        dto.put("opponent", new ArrayList<Objects>());
+        return dto;
+    }
+
     public void addScore(Score score) {
         this.scores.add(score);
     }

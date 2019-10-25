@@ -46,6 +46,14 @@ public class Player {
         return dto;
     }
 
+    public Set<GamePlayer> getGames() {
+        return games;
+    }
+
+    public void setGames(Set<GamePlayer> games) {
+        this.games = games;
+    }
+
     public Score getScore(Game game) {
         return scores.stream()
                 .filter(score -> score.getGame().getId() == game.getId())
