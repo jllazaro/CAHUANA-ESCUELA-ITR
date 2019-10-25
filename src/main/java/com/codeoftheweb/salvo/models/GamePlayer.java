@@ -72,7 +72,7 @@ public class GamePlayer {
     }
 
     public Set<Salvo> getSalvoes() {
-        return salvoes;
+        return salvoes != null ? salvoes : null;
     }
 
     public Score getScore() {

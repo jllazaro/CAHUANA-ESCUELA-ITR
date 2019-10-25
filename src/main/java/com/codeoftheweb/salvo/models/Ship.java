@@ -39,5 +39,8 @@ public class Ship {
         dto.put("locations", this.locations);
         return dto;
     }
+    public void addGamePlayer(GamePlayer gamePlayer){
+        this.gamePlayer = gamePlayer;
+    }
 
 }
