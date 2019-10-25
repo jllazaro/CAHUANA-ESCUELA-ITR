@@ -133,13 +133,11 @@ public class SalvoController {
         if (gamePLayer.getShips().size() > 0) {
             return new ResponseEntity<>(makeMap("error", "YA TIENE NAVES COLOCADAS"), HttpStatus.FORBIDDEN);
         }
-        System.out.println("makeMap(ships,ships.stream().map(ship->ship.makeShipDTO()))");
-        System.out.println(ships.stream().map(ship->ship.makeShipDTO()).collect(Collectors.toList()));
         gamePLayer.getShips().addAll(ships);
-        ships.stream().forEach(ship -> ship.addGamePlayer(gamePLayer));
         gamePlayerRepository.save(gamePLayer);
         ships.stream().forEach(ship -> shipRepository.save(ship));
-//        ships.stream().forEach(ship -> gamePLayer.addShip(ship));
+        ships.stream().forEach(ship -> gamePLayer.addShip(ship));
+        gamePlayerRepository.save(gamePLayer);
         return new ResponseEntity<>(makeMap("OK","OK"),HttpStatus.CREATED);
     }
 
