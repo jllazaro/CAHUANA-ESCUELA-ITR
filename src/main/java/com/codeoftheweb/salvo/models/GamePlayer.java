@@ -25,7 +25,7 @@ public class GamePlayer {
     @JsonIgnore
     private List<Ship> ships = new ArrayList<>();
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
-    private Set<Salvo> salvoes = new HashSet<>();
+    private List<Salvo> salvoes = new ArrayList<>();
 
     public GamePlayer() {
     }
@@ -64,11 +64,11 @@ public class GamePlayer {
         salvoes.add(salvo);
     }
 
-    public void  setShipses( List<Ship> ships) {
+    public void setShipses(List<Ship> ships) {
         this.ships.addAll(ships);
     }
 
-    public Set<Salvo> getSalvoes() {
+    public List<Salvo> getSalvoes() {
         return salvoes != null ? salvoes : null;
     }
 
@@ -97,7 +97,11 @@ public class GamePlayer {
         this.ships = ships;
     }
 
-    public void setSalvoes(Set<Salvo> salvoes) {
+    public void setSalvoes(List<Salvo> salvoes) {
         this.salvoes = salvoes;
+    }
+
+    public boolean haveSalvoWithTurn(Integer turn) {
+        return this.salvoes.stream().anyMatch(salvo -> (salvo.getTurn() == turn));
     }
 }
