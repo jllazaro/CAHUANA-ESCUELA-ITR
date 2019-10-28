@@ -71,4 +71,19 @@ public class Game {
         this.scores.add(score);
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setPlayers(Set<GamePlayer> players) {
+        this.players = players;
+    }
+
+    public Set<Score> getScores() {
+        return scores;
+    }
+
+    public void setScores(Set<Score> scores) {
+        this.scores = scores;
+    }
 }

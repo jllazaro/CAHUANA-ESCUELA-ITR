@@ -67,5 +67,25 @@ public class Score {
     public LocalDateTime getFinishDate() {
         return finishDate;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
+    }
+
+    public void setFinishDate(LocalDateTime finishDate) {
+        this.finishDate = finishDate;
+    }
 }
 

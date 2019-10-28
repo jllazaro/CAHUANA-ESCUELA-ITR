@@ -63,4 +63,24 @@ public class Player {
     public String getPassword() {
         return password;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Set<Score> getScores() {
+        return scores;
+    }
+
+    public void setScores(Set<Score> scores) {
+        this.scores = scores;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

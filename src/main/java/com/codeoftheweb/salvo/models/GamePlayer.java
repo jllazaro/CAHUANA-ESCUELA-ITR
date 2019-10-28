@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class GamePlayer {
@@ -26,7 +23,7 @@ public class GamePlayer {
 
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
     @JsonIgnore
-    private Set<Ship> ships = new HashSet<>();
+    private List<Ship> ships = new ArrayList<>();
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
     private Set<Salvo> salvoes = new HashSet<>();
 
@@ -67,8 +64,8 @@ public class GamePlayer {
         salvoes.add(salvo);
     }
 
-    public Set<Ship> getShips() {
-        return ships;
+    public void  setShipses( List<Ship> ships) {
+        this.ships.addAll(ships);
     }
 
     public Set<Salvo> getSalvoes() {
@@ -80,4 +77,27 @@ public class GamePlayer {
                 player.getScore(this.getGame());
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public List<Ship> getShips() {
+        return ships;
+    }
+
+    public void setShips(List<Ship> ships) {
+        this.ships = ships;
+    }
+
+    public void setSalvoes(Set<Salvo> salvoes) {
+        this.salvoes = salvoes;
+    }
 }

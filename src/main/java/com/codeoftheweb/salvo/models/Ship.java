@@ -70,4 +70,5 @@ public class Ship {
     public void setLocations(List<String> locations) {
         this.locations = locations;
     }
+
 }

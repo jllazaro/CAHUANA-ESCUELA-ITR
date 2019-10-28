@@ -121,11 +121,14 @@ public class SalvoController {
         if (isGuest(authentication) || authentication.getName() != gamePLayer.getPlayer().getUserName() || gamePLayer.equals(null)) {
             return new ResponseEntity<>(makeMap("error", "ERROR DE VALIDACION DE DATOS"), HttpStatus.UNAUTHORIZED);
         }
+        System.out.println("get de ships");
+        gamePLayer.getShips().forEach(ship -> System.out.println(ship.makeShipDTO()));
+        System.out.println("fin get de ships");
         return new ResponseEntity<>(makeMap("ships", gamePLayer.getShips().stream().map(ship -> ship.makeShipDTO())), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(path = "api/games/players/{gamePlayerId}/ships", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, Object>> setShipsOfGamePlayer(@PathVariable Long gamePlayerId, Authentication authentication, @RequestBody Set<Ship> ships) {
+    public ResponseEntity<Map<String, Object>> setShipsOfGamePlayer(@PathVariable Long gamePlayerId, Authentication authentication, @RequestBody List<Ship> ships) {
         GamePlayer gamePLayer = gamePlayerRepository.findById(gamePlayerId).get();
         if (isGuest(authentication) || authentication.getName() != gamePLayer.getPlayer().getUserName() || gamePLayer.equals(null)) {
             return new ResponseEntity<>(makeMap("error", "ERROR DE VALIDACION DE DATOS"), HttpStatus.UNAUTHORIZED);
@@ -133,11 +136,11 @@ public class SalvoController {
         if (gamePLayer.getShips().size() > 0) {
             return new ResponseEntity<>(makeMap("error", "YA TIENE NAVES COLOCADAS"), HttpStatus.FORBIDDEN);
         }
-        gamePLayer.getShips().addAll(ships);
-        gamePlayerRepository.save(gamePLayer);
+        ships.stream().forEach(ship -> System.out.println(ship.makeShipDTO()));
         ships.stream().forEach(ship -> shipRepository.save(ship));
         ships.stream().forEach(ship -> gamePLayer.addShip(ship));
         gamePlayerRepository.save(gamePLayer);
+        gamePLayer.getShips().forEach(ship -> System.out.println(ship.makeShipDTO()));
         return new ResponseEntity<>(makeMap("OK","OK"),HttpStatus.CREATED);
     }
 
