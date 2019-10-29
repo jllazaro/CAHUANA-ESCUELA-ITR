@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+
 @RestController
 public class GamePlayerControllerInit extends ControllerInit {
 
@@ -33,15 +34,19 @@ public class GamePlayerControllerInit extends ControllerInit {
 
     @RequestMapping(path = "api/games/players/{gamePlayerId}/ships", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> setShipsOfGamePlayer(@PathVariable Long gamePlayerId, Authentication authentication, @RequestBody List<Ship> ships) {
-        GamePlayer gamePLayer = gamePlayerRepository.findById(gamePlayerId).get();
-        if (isGuest(authentication) || authentication.getName() != gamePLayer.getPlayer().getUserName() || gamePLayer.equals(null)) {
+        GamePlayer gamePLayer = gamePlayerRepository.findById(gamePlayerId).orElse(null);
+        if (isGuest(authentication) || gamePLayer == null || authentication.getName() != gamePLayer.getPlayer().getUserName() ) {
             return new ResponseEntity<>(makeMap("error", "ERROR DE VALIDACION DE DATOS"), HttpStatus.UNAUTHORIZED);
         }
         if (gamePLayer.getShips().size() > 0) {
             return new ResponseEntity<>(makeMap("error", "YA TIENE NAVES COLOCADAS"), HttpStatus.FORBIDDEN);
         }
-        ships.stream().forEach(ship -> shipRepository.save(ship));
-        ships.stream().forEach(ship -> gamePLayer.addShip(ship));
+        ships.stream().forEach(ship -> {
+            System.out.println(ship.makeShipDTO());
+                    gamePLayer.addShip(ship);
+                    shipRepository.save(ship);
+                }
+        );
         gamePlayerRepository.save(gamePLayer);
         return new ResponseEntity<>(makeMap("OK", "OK"), HttpStatus.CREATED);
     }

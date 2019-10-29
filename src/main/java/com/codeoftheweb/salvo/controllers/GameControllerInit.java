@@ -26,11 +26,8 @@ public class GameControllerInit extends ControllerInit {
             dto.put("player", "Guest");
         } else {
             Player player = playerRepository.findByUserName(authentication.getName());
-//            if (authentication.getName() == player.getUserName() && !player.equals(null)) {
 
-                dto.put("player", player.makePlayerDTO());
-//            }
-//            dto.put("player", "Guest");
+            dto.put("player", player.makePlayerDTO());
         }
         dto.put("games", gameRepository.findAll().stream()
                 .map(game -> game.makeGameDTO())
