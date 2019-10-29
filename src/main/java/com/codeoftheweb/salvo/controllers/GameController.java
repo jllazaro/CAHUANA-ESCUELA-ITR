@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-public class GameControllerInit extends ControllerInit {
+public class GameController extends ControllerInit {
 
 
     @RequestMapping(path = "api/games")

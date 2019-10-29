@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-public class PlayerControllerInit extends ControllerInit {
+public class PlayerController extends ControllerInit {
     @RequestMapping(path = "/api/players", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> register(
             @RequestParam String email, @RequestParam String password) {
