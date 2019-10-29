@@ -42,7 +42,7 @@ public class Game {
         dto.put("id", this.getId());
         dto.put("created", this.getCreationDate());
         dto.put("gamePlayers", this.getPlayers().stream().map(gp -> gp.makeGamePlayerDTO()));
-        dto.put("scores", this.getPlayers().stream().map(gp -> gp.getScore() != null ? gp.getScore().makeDTO() : null));
+        dto.put("scores", this.getPlayers().stream().map(gp -> gp.getScore() != null ? gp.getScore().makeDTO() : ""));
         return dto;
     }
 

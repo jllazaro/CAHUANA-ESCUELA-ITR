@@ -37,7 +37,8 @@ public class GamePlayer {
 
     public Map<String, Object> makeGamePlayerDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
-        dto.put("id", this.getId());
+//        dto.put("gpid", this.getId());
+        dto.put("id", this.getPlayer().getId());
         dto.put("player", this.getPlayer().makePlayerDTO());
         return dto;
     }
@@ -55,13 +56,13 @@ public class GamePlayer {
     }
 
     public void addShip(Ship ship) {
-        ship.setGamePlayer(this);
         ships.add(ship);
+        ship.setGamePlayer(this);
     }
 
     public void addSalvo(Salvo salvo) {
-        salvo.setGamePlayer(this);
         salvoes.add(salvo);
+        salvo.setGamePlayer(this);
     }
 
     public void setShipses(List<Ship> ships) {
@@ -104,4 +105,5 @@ public class GamePlayer {
     public boolean haveSalvoWithTurn(Integer turn) {
         return this.salvoes.stream().anyMatch(salvo -> (salvo.getTurn() == turn));
     }
+
 }

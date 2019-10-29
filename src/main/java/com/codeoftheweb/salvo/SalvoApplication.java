@@ -61,6 +61,17 @@ public class SalvoApplication {
             game4.setCreationDate(LocalDateTime.now().plusHours(3));
             game5.setCreationDate(LocalDateTime.now().plusHours(4));
 
+            GamePlayer gamePlayer1 = new GamePlayer(game1, player1);
+//            GamePlayer gamePlayer2 = new GamePlayer(game1, player2);
+            GamePlayer gamePlayer3 = new GamePlayer(game2, player3);
+//            GamePlayer gamePlayer4 = new GamePlayer(game2, player4);
+            GamePlayer gamePlayer5 = new GamePlayer(game3, player3);
+            GamePlayer gamePlayer6 = new GamePlayer(game3, player2);
+            GamePlayer gamePlayer7 = new GamePlayer(game4, player1);
+            GamePlayer gamePlayer8 = new GamePlayer(game4, player2);
+            GamePlayer gamePlayer9 = new GamePlayer(game5, player1);
+            GamePlayer gamePlayer10 = new GamePlayer(game5, player2);
+
             Ship ship1 = new Ship("cruiser", Arrays.asList("A8", "A9", "A10"));
             Ship ship2 = new Ship("destroyer", Arrays.asList("D3", "E3", "F3"));
             Ship ship3 = new Ship("battleship", Arrays.asList("C1", "C2", "C3"));
@@ -78,17 +89,6 @@ public class SalvoApplication {
             Salvo salvo6 = new Salvo(2, Arrays.asList("D1", "D2", "D3"));
             Salvo salvo7 = new Salvo(3, Arrays.asList("F8", "F9", "F10"));
             Salvo salvo8 = new Salvo(4, Arrays.asList("A3", "B3", "C3"));
-
-            GamePlayer gamePlayer1 = new GamePlayer(game1, player1);
-//            GamePlayer gamePlayer2 = new GamePlayer(game1, player2);
-            GamePlayer gamePlayer3 = new GamePlayer(game2, player3);
-//            GamePlayer gamePlayer4 = new GamePlayer(game2, player4);
-            GamePlayer gamePlayer5 = new GamePlayer(game3, player3);
-            GamePlayer gamePlayer6 = new GamePlayer(game3, player2);
-            GamePlayer gamePlayer7 = new GamePlayer(game4, player1);
-            GamePlayer gamePlayer8 = new GamePlayer(game4, player2);
-            GamePlayer gamePlayer9 = new GamePlayer(game5, player1);
-            GamePlayer gamePlayer10 = new GamePlayer(game5, player2);
 
             Score score1 = new Score(game1, player1, 1.00, LocalDateTime.now());
             Score score2 = new Score(game1, player2, 1.00, LocalDateTime.now());
