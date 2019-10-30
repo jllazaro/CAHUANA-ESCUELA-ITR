@@ -14,7 +14,7 @@ public class Game {
     private long id;
     private LocalDateTime creationDate = LocalDateTime.now();
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
-    private Set<GamePlayer> players = new HashSet<>();
+    private Set<GamePlayer> gamePlayers = new HashSet<>();
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
     private Set<Score> scores = new HashSet<>();
 
@@ -33,39 +33,40 @@ public class Game {
         this.creationDate = creationDate;
     }
 
-    public Set<GamePlayer> getPlayers() {
-        return players;
+    public Set<GamePlayer> getGamePlayers() {
+        return gamePlayers;
     }
 
     public Map<String, Object> makeGameDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", this.getId());
         dto.put("created", this.getCreationDate());
-        dto.put("gamePlayers", this.getPlayers().stream().map(gp -> gp.makeGamePlayerDTO()));
-        dto.put("scores", this.getPlayers().stream().map(gp -> gp.getScore() != null ? gp.getScore().makeDTO() : ""));
+        dto.put("gamePlayers", this.getGamePlayers().stream().map(gp -> gp.makeGamePlayerDTO()));
+        dto.put("scores", this.getGamePlayers().stream().map(gp -> gp.getScore() != null ? gp.getScore().makeDTO() : ""));
         return dto;
     }
 
-    
 
     public Map<String, Object> makeGameDTO_gameViewWithSalvoes(GamePlayer gamePlayer) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", this.getId());
         dto.put("created", this.getCreationDate());
         dto.put("gameState", "PLACESHIPS");
-        dto.put("gamePlayers", this.getPlayers().stream().map(gp -> gp.makeGamePlayerDTO()));
+        dto.put("gamePlayers", this.getGamePlayers().stream().map(gp -> gp.makeGamePlayerDTO()));
         dto.put("ships", gamePlayer.getShips().stream().map(ship -> ship.makeShipDTO()));
-        dto.put("salvoes", getPlayers().stream().flatMap(aGamePlayer -> aGamePlayer.getSalvoes().stream().map(salvo -> salvo.makeSalvoDTO())));
-        dto.put("hits", this.hits());
+        dto.put("salvoes", getGamePlayers().stream().flatMap(aGamePlayer -> aGamePlayer.getSalvoes().stream().map(salvo -> salvo.makeSalvoDTO())));
+        dto.put("hits", this.hits(gamePlayer));
         return dto;
     }
 
-    private Map<String, Object> hits() {
+    private Map<String, Object> hits(GamePlayer gamePlayer) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
-        dto.put("self", new ArrayList<Objects>());
-        dto.put("opponent", new ArrayList<Objects>());
+//        dto.put("self", "esta vacio");
+        dto.put("self", gamePlayer.getHits().stream().map(hit->hit.makeDTO()));
+        dto.put("opponent", gamePlayer.gamePlayerOpponent().getHits().stream().map(hit->hit.makeDTO()));
         return dto;
     }
+
 
     public void addScore(Score score) {
         this.scores.add(score);
@@ -75,8 +76,8 @@ public class Game {
         this.id = id;
     }
 
-    public void setPlayers(Set<GamePlayer> players) {
-        this.players = players;
+    public void setGamePlayers(Set<GamePlayer> gamePlayers) {
+        this.gamePlayers = gamePlayers;
     }
 
     public Set<Score> getScores() {
@@ -86,4 +87,5 @@ public class Game {
     public void setScores(Set<Score> scores) {
         this.scores = scores;
     }
+
 }

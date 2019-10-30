@@ -5,6 +5,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Entity
 public class GamePlayer {
@@ -26,13 +29,17 @@ public class GamePlayer {
     private Set<Ship> ships = new HashSet<>();
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
     private Set<Salvo> salvoes = new HashSet<>();
+    @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
+    private Set<Hit> hits = new HashSet<>();
 
     public GamePlayer() {
     }
 
     public GamePlayer(Game game, Player player) {
         this.game = game;
+//        game.getGamePlayers().add(this);
         this.player = player;
+//        player.getGamePlayers().add(this);
     }
 
     public Map<String, Object> makeGamePlayerDTO() {
@@ -56,13 +63,20 @@ public class GamePlayer {
     }
 
     public void addShip(Ship ship) {
-        ships.add(ship);
         ship.setGamePlayer(this);
+        ships.add(ship);
+
     }
 
     public void addSalvo(Salvo salvo) {
-        salvoes.add(salvo);
         salvo.setGamePlayer(this);
+        salvoes.add(salvo);
+        if (this.gamePlayerOpponent() == null) {
+            System.out.println("no hay oponente");
+        }else{
+            System.out.println(this.gamePlayerOpponent().makeGamePlayerDTO());
+        }
+        this.gamePlayerOpponent().collectSalvo(salvo);
     }
 
     public void setShipses(List<Ship> ships) {
@@ -70,7 +84,7 @@ public class GamePlayer {
     }
 
     public Set<Salvo> getSalvoes() {
-        return salvoes ;
+        return salvoes;
     }
 
     public Score getScore() {
@@ -104,6 +118,58 @@ public class GamePlayer {
 
     public boolean haveSalvoWithTurn(Integer turn) {
         return this.salvoes.stream().anyMatch(salvo -> salvo.getTurn() == turn);
+    }
+
+    public Set<Hit> getHits() {
+        return hits;
+    }
+
+    public void setHits(Set<Hit> hits) {
+        this.hits = hits;
+    }
+
+
+    public List<List<String>> locationsOfShipType(String type) {
+        return ships.stream().filter(ship -> ship.getType().equals(type))
+                .map(ship -> ship.getLocations())
+                .collect(Collectors.toList());
+
+    }
+
+    public GamePlayer gamePlayerOpponent() {
+        System.out.println("aca rompe");
+        return game.getGamePlayers().stream().filter(gp -> !(gp.getPlayer().getUserName().equals(this.getPlayer().getUserName()))).findFirst().orElse(null);
+    }
+
+    public void collectSalvo(Salvo salvo) {
+        System.out.println("rompe2");
+        hits.add(new Hit(salvo, this));
+    }
+
+    public int hitsByTypeShip(Hit hit, String type) {
+
+        AtomicInteger count = new AtomicInteger();
+        this.shipsOfType(type).stream().forEach(
+                ship -> {
+                    ship.getLocations().stream().forEach(
+                            shipLocation -> {
+                                hit.getLocations().stream().forEach(
+                                        hitLocation -> {
+                                            if (shipLocation.equals(hitLocation)) {
+                                                count.getAndIncrement();
+                                            }
+                                        }
+                                );
+
+                            }
+                    );
+                }
+        );
+        return count.get();
+    }
+
+    public Set<Ship> shipsOfType(String type) {
+        return ships.stream().filter(ship -> ship.getType().equals(type)).collect(Collectors.toSet());
     }
 
 }

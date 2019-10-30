@@ -16,13 +16,16 @@ public class Salvo {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "gamePlayer_id")
     private GamePlayer gamePlayer;
-    private  Integer turn;
+    private Integer turn;
     @ElementCollection
     private List<String> locations;
-    public Salvo (){}
-    public Salvo (Integer turn, List <String> locations){
-        this.turn= turn;
-        this.locations= locations;
+
+    public Salvo() {
+    }
+
+    public Salvo(Integer turn, List<String> locations) {
+        this.turn = turn;
+        this.locations = locations;
     }
 
     public long getId() {

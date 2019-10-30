@@ -17,7 +17,7 @@ public class Player {
     private long id;
     private String userName;
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
-    private Set<GamePlayer> games;
+    private Set<GamePlayer> gamePlayers;
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
     private Set<Score> scores;
     @JsonIgnore
@@ -46,12 +46,12 @@ public class Player {
         return dto;
     }
 
-    public Set<GamePlayer> getGames() {
-        return games;
+    public Set<GamePlayer> getGamePlayers() {
+        return gamePlayers;
     }
 
-    public void setGames(Set<GamePlayer> games) {
-        this.games = games;
+    public void setGamePlayers(Set<GamePlayer> gamePlayers) {
+        this.gamePlayers = gamePlayers;
     }
 
     public Score getScore(Game game) {
@@ -83,4 +83,6 @@ public class Player {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }

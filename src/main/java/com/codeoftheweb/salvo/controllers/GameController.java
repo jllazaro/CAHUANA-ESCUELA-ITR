@@ -61,7 +61,7 @@ public class GameController extends ControllerInit {
         if (game.equals(null)) {
             return new ResponseEntity<>(makeMap("error", "No such game"), HttpStatus.FORBIDDEN);
         }
-        if (game.getPlayers().size() > 1) {
+        if (game.getGamePlayers().size() > 1) {
             return new ResponseEntity<>(makeMap("error", "Game is full"), HttpStatus.FORBIDDEN);
         }
         Player logged = playerRepository.findByUserName(authentication.getName());

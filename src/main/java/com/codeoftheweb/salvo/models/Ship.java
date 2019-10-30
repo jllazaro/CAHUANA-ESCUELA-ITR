@@ -29,6 +29,7 @@ public class Ship {
         this.type = type;
         this.locations = location;
     }
+
     public void setGamePlayer(GamePlayer gamePlayer) {
         this.gamePlayer = gamePlayer;
     }
@@ -39,7 +40,8 @@ public class Ship {
         dto.put("locations", this.locations);
         return dto;
     }
-    public void addGamePlayer(GamePlayer gamePlayer){
+
+    public void addGamePlayer(GamePlayer gamePlayer) {
         this.gamePlayer = gamePlayer;
     }
 
@@ -70,5 +72,6 @@ public class Ship {
     public void setLocations(List<String> locations) {
         this.locations = locations;
     }
+
 
 }
