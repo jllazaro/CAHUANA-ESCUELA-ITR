@@ -109,12 +109,12 @@ public class SalvoApplication {
 
             Salvo salvo1 = new Salvo(1, Arrays.asList("A8", "A9"));
             Salvo salvo2 = new Salvo(2, Arrays.asList("D3", "E3"));
-            Salvo salvo3 = new Salvo(3, Arrays.asList("C1", "C2"));
-            Salvo salvo4 = new Salvo(4, Arrays.asList("G8", "G9"));
+            Salvo salvo3 = new Salvo(1, Arrays.asList("C1", "C2"));
+            Salvo salvo4 = new Salvo(2, Arrays.asList("G8", "G9"));
             Salvo salvo5 = new Salvo(1, Arrays.asList("H3", "I3"));
             Salvo salvo6 = new Salvo(2, Arrays.asList("D1", "D2", "D3"));
-            Salvo salvo7 = new Salvo(3, Arrays.asList("F8", "F9", "F10"));
-            Salvo salvo8 = new Salvo(4, Arrays.asList("A3", "B3", "C3"));
+            Salvo salvo7 = new Salvo(1, Arrays.asList("F8", "F9", "F10"));
+            Salvo salvo8 = new Salvo(2, Arrays.asList("A3", "B3", "C3"));
 
             Score score1 = new Score(game1, player1, 1.00, LocalDateTime.now());
             Score score2 = new Score(game1, player2, 1.00, LocalDateTime.now());
@@ -137,9 +137,6 @@ public class SalvoApplication {
             Hit hit6 = new Hit(salvo6,gamePlayer4);
             Hit hit7 = new Hit(salvo7,gamePlayer3);
             Hit hit8 = new Hit(salvo7,gamePlayer3);
-
-
-
 
 
             gamePlayer1.addShip(ship1);
@@ -168,6 +165,7 @@ public class SalvoApplication {
             hit6.loadHitLocationsBySalvo(salvo6);
             hit7.loadHitLocationsBySalvo(salvo7);
             hit8.loadHitLocationsBySalvo(salvo8);
+
             System.out.println("hit1.getLocations()");
             System.out.println(hit1.getLocations());
 

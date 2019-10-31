@@ -70,11 +70,12 @@ public class Hit {
         dto.put("turn", this.turn);
         dto.put("hitLocations", this.getLocations());
         dto.put("damages", this.damages());
-        dto.put("missed", this.missed());
+        dto.put("missed", this.missed(this.getTurn()));
         return dto;
     }
 
-    public Integer missed() {
+    public Integer missed(Integer turn) {
+        gamePlayer.shipMissedByHitTurn( turn);
         return 0;
     }
 
@@ -85,11 +86,11 @@ public class Hit {
         dto.put("submarineHits", gamePlayer.hitsByTypeShip(this, "submarine"));
         dto.put("destroyerHits", gamePlayer.hitsByTypeShip(this, "destroyer"));
         dto.put("patrolboatHits", gamePlayer.hitsByTypeShip(this, "patrolboat"));
-        dto.put("carrier",  gamePlayer.hitsByTypeShip(this, "carrier"));
-        dto.put("battleship", gamePlayer.hitsByTypeShip(this, "battleship"));
-        dto.put("submarine", gamePlayer.hitsByTypeShip(this, "submarine"));
-        dto.put("destroyer",gamePlayer.hitsByTypeShip(this, "destroyer"));
-        dto.put("patrolboat", gamePlayer.hitsByTypeShip(this, "patrolboat"));
+        dto.put("carrier",  gamePlayer.totalHitsByTypeShip("carrier",this.getTurn()));
+        dto.put("battleship", gamePlayer.totalHitsByTypeShip("battleship",this.getTurn() ));
+        dto.put("submarine", gamePlayer.totalHitsByTypeShip("submarine",this.getTurn() ));
+        dto.put("destroyer",gamePlayer.totalHitsByTypeShip("destroyer",this.getTurn() ));
+        dto.put("patrolboat", gamePlayer.totalHitsByTypeShip("patrolboat",this.getTurn() ));
         return dto;
     }
 

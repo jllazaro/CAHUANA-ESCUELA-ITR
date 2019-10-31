@@ -1,15 +1,12 @@
 package com.codeoftheweb.salvo.models;
 
-import com.codeoftheweb.salvo.repositories.HitRepository;
-import com.codeoftheweb.salvo.repositories.SalvoRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collector;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Entity
@@ -40,18 +37,11 @@ public class GamePlayer {
     public GamePlayer(Game game, Player player) {
         this.game = game;
         this.player = player;
-//        mergeGameAndPlayer();
     }
 
-//    public void mergeGameAndPlayer() {
-////        System.out.println(game.makeGameDTO());
-//        game.addGamePlayer(this);
-//        player.addGamePlayer(this);
-//    }
 
     public Map<String, Object> makeGamePlayerDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
-//        dto.put("gpid", this.getId());
         dto.put("id", this.getPlayer().getId());
         dto.put("player", this.getPlayer().makePlayerDTO());
         return dto;
@@ -79,7 +69,6 @@ public class GamePlayer {
         salvo.setGamePlayer(this);
         salvoes.add(salvo);
 
-        this.gamePlayerOpponent().collectSalvo(salvo);
     }
 
     public void setShipses(List<Ship> ships) {
@@ -131,22 +120,19 @@ public class GamePlayer {
         this.hits = hits;
     }
 
+    public int totalHitsByTypeShip(String type, Integer turn) {
 
-    public List<List<String>> locationsOfShipType(String type) {
-        return ships.stream().filter(ship -> ship.getType().equals(type))
-                .map(ship -> ship.getLocations())
-                .collect(Collectors.toList());
+        AtomicReference<Integer> count = new AtomicReference<>(0);
+        this.hits.stream().forEach(
+                hit -> {
+                    if (hit.getTurn() <= turn) {
 
-    }
+                        count.updateAndGet(v -> v + (hitsByTypeShip(hit, type)));
+                    }
+                }
+        );
+        return count.get();
 
-    public GamePlayer gamePlayerOpponent() {
-        return game.getGamePlayers().stream().filter(gp -> (gp.getPlayer().getUserName() != this.getPlayer().getUserName())).findFirst().orElse(null);
-    }
-
-    public void collectSalvo(Salvo salvo) {
-        Hit aux = new Hit(salvo, this);
-        hits.add(aux);
-//        hitRepository.save(aux);
     }
 
     public int hitsByTypeShip(Hit hit, String type) {
@@ -175,4 +161,26 @@ public class GamePlayer {
         return ships.stream().filter(ship -> ship.getType().equals(type)).collect(Collectors.toSet());
     }
 
+    public Integer shipMissedByHitTurn(Integer turn) {
+        Integer count = 0;
+        this.hits.stream().forEach(
+                hit -> {
+                    if (hit.getTurn() <= turn) {
+                        this.shipsLocations().stream().forEach(
+                                listPosition -> {
+                                        listPosition.stream().forEach(
+                                                {
+
+                                                }
+                                        );
+                                });
+                    }
+                }
+        );
+        return count;
+    }
+
+    public List<List<String>> shipsLocations() {
+        return this.ships.stream().map(ship -> ship.getLocations()).collect(Collectors.toList());
+    }
 }

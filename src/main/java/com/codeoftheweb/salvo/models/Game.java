@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collector;
 
 @Entity
 public class Game {
@@ -62,11 +63,15 @@ public class Game {
     private Map<String, Object> hits(GamePlayer gamePlayer) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
 //        dto.put("self", "esta vacio");
-        dto.put("self", gamePlayer.getHits().stream().map(hit->hit.makeDTO()));
-        dto.put("opponent", gamePlayer.gamePlayerOpponent().getHits().stream().map(hit->hit.makeDTO()));
+        dto.put("self", gamePlayer.getHits().stream().map(hit -> hit.makeDTO()));
+        dto.put("opponent", gamePlayerOpponent(gamePlayer).getHits().stream().map(hit -> hit.makeDTO()));
         return dto;
     }
 
+    public GamePlayer gamePlayerOpponent(GamePlayer gamePlayer) {
+        return gamePlayers.size() > 1 ? this.getGamePlayers().stream().filter(gp -> (gp.getPlayer().getUserName() != gamePlayer.getPlayer().getUserName())).findFirst().get() : null ;
+
+    }
 
     public void addScore(Score score) {
         this.scores.add(score);
