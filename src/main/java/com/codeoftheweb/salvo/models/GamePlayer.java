@@ -1,7 +1,10 @@
 package com.codeoftheweb.salvo.models;
 
+import com.codeoftheweb.salvo.repositories.HitRepository;
+import com.codeoftheweb.salvo.repositories.SalvoRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.*;
@@ -15,7 +18,6 @@ public class GamePlayer {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "player_id")
     private Player player;
@@ -37,10 +39,15 @@ public class GamePlayer {
 
     public GamePlayer(Game game, Player player) {
         this.game = game;
-//        game.getGamePlayers().add(this);
         this.player = player;
-//        player.getGamePlayers().add(this);
+//        mergeGameAndPlayer();
     }
+
+//    public void mergeGameAndPlayer() {
+////        System.out.println(game.makeGameDTO());
+//        game.addGamePlayer(this);
+//        player.addGamePlayer(this);
+//    }
 
     public Map<String, Object> makeGamePlayerDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
@@ -71,11 +78,7 @@ public class GamePlayer {
     public void addSalvo(Salvo salvo) {
         salvo.setGamePlayer(this);
         salvoes.add(salvo);
-        if (this.gamePlayerOpponent() == null) {
-            System.out.println("no hay oponente");
-        }else{
-            System.out.println(this.gamePlayerOpponent().makeGamePlayerDTO());
-        }
+
         this.gamePlayerOpponent().collectSalvo(salvo);
     }
 
@@ -137,13 +140,13 @@ public class GamePlayer {
     }
 
     public GamePlayer gamePlayerOpponent() {
-        System.out.println("aca rompe");
-        return game.getGamePlayers().stream().filter(gp -> !(gp.getPlayer().getUserName().equals(this.getPlayer().getUserName()))).findFirst().orElse(null);
+        return game.getGamePlayers().stream().filter(gp -> (gp.getPlayer().getUserName() != this.getPlayer().getUserName())).findFirst().orElse(null);
     }
 
     public void collectSalvo(Salvo salvo) {
-        System.out.println("rompe2");
-        hits.add(new Hit(salvo, this));
+        Hit aux = new Hit(salvo, this);
+        hits.add(aux);
+//        hitRepository.save(aux);
     }
 
     public int hitsByTypeShip(Hit hit, String type) {

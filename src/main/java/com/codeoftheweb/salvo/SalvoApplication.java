@@ -43,7 +43,7 @@ public class SalvoApplication {
     }
 
     @Bean
-    public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository, SalvoRepository salvoRepository, ScoreRepository scoreRepository) {
+    public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository, SalvoRepository salvoRepository, ScoreRepository scoreRepository, HitRepository hitRepository) {
         return (args) -> {
             Player player1 = new Player("j.bauer@ctu.gov", passwordEncoder().encode("123456"));
             Player player2 = new Player("c.obrian@ctu.gov", passwordEncoder().encode("123456"));
@@ -71,6 +71,32 @@ public class SalvoApplication {
             GamePlayer gamePlayer8 = new GamePlayer(game4, player4);
             GamePlayer gamePlayer9 = new GamePlayer(game5, player1);
             GamePlayer gamePlayer10 = new GamePlayer(game5, player2);
+
+//            System.out.println(gamePlayer1.getGame().getGamePlayers().stream().map(a->a.getGame()));
+
+//            gamePlayer1.mergeGameAndPlayer();
+//            gamePlayer2.mergeGameAndPlayer();
+//            gamePlayer3.mergeGameAndPlayer();
+//            gamePlayer4.mergeGameAndPlayer();
+//            gamePlayer5.mergeGameAndPlayer();
+//            gamePlayer6.mergeGameAndPlayer();
+//            gamePlayer7.mergeGameAndPlayer();
+//            gamePlayer8.mergeGameAndPlayer();
+//            gamePlayer9.mergeGameAndPlayer();
+//            gamePlayer10.mergeGameAndPlayer();
+
+//
+//
+            game1.getGamePlayers().add(gamePlayer1);
+            game1.getGamePlayers().add(gamePlayer2);
+            game2.getGamePlayers().add(gamePlayer3);
+            game2.getGamePlayers().add(gamePlayer4);
+            game3.getGamePlayers().add(gamePlayer5);
+            game3.getGamePlayers().add(gamePlayer6);
+            game4.getGamePlayers().add(gamePlayer7);
+            game4.getGamePlayers().add(gamePlayer8);
+            game5.getGamePlayers().add(gamePlayer9);
+            game5.getGamePlayers().add(gamePlayer10);
 
             Ship ship1 = new Ship("carrier", Arrays.asList("A8", "A9", "A10"));
             Ship ship2 = new Ship("destroyer", Arrays.asList("D3", "E3", "F3"));
@@ -101,6 +127,21 @@ public class SalvoApplication {
             Score score9 = new Score(game5, player1, 0.50, LocalDateTime.now());
             Score score10 = new Score(game5, player2, 0.50, LocalDateTime.now());
 
+            Hit hit1 = new Hit(salvo1,gamePlayer1);
+            System.out.println("hit1.getLocations()");
+            System.out.println(hit1.getLocations());
+            Hit hit2 = new Hit(salvo2,gamePlayer1);
+            Hit hit3 = new Hit(salvo3,gamePlayer2);
+            Hit hit4 = new Hit(salvo4,gamePlayer2);
+            Hit hit5 = new Hit(salvo5,gamePlayer4);
+            Hit hit6 = new Hit(salvo6,gamePlayer4);
+            Hit hit7 = new Hit(salvo7,gamePlayer3);
+            Hit hit8 = new Hit(salvo7,gamePlayer3);
+
+
+
+
+
             gamePlayer1.addShip(ship1);
             gamePlayer1.addShip(ship2);
             gamePlayer2.addShip(ship3);
@@ -118,6 +159,17 @@ public class SalvoApplication {
             gamePlayer3.addSalvo(salvo8);
             gamePlayer4.addSalvo(salvo5);
             gamePlayer4.addSalvo(salvo6);
+
+            hit1.loadHitLocationsBySalvo(salvo1);
+            hit2.loadHitLocationsBySalvo(salvo2);
+            hit3.loadHitLocationsBySalvo(salvo3);
+            hit4.loadHitLocationsBySalvo(salvo4);
+            hit5.loadHitLocationsBySalvo(salvo5);
+            hit6.loadHitLocationsBySalvo(salvo6);
+            hit7.loadHitLocationsBySalvo(salvo7);
+            hit8.loadHitLocationsBySalvo(salvo8);
+            System.out.println("hit1.getLocations()");
+            System.out.println(hit1.getLocations());
 
 
             playerRepository.save(player1);
@@ -172,6 +224,26 @@ public class SalvoApplication {
             scoreRepository.save(score8);
             scoreRepository.save(score9);
             scoreRepository.save(score10);
+
+
+            hitRepository.save(hit1);
+            hitRepository.save(hit2);
+            hitRepository.save(hit3);
+            hitRepository.save(hit4);
+            hitRepository.save(hit5);
+            hitRepository.save(hit6);
+            hitRepository.save(hit7);
+            hitRepository.save(hit8);
+            System.out.println("hit1.getLocations()");
+            System.out.println(hit1.getLocations());
+            hitRepository.save(hit1);
+            hitRepository.save(hit2);
+            hitRepository.save(hit3);
+            hitRepository.save(hit4);
+            hitRepository.save(hit5);
+            hitRepository.save(hit6);
+            hitRepository.save(hit7);
+            hitRepository.save(hit8);
         };
     }
 }

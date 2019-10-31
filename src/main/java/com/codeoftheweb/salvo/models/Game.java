@@ -88,4 +88,7 @@ public class Game {
         this.scores = scores;
     }
 
+    public void addGamePlayer(GamePlayer gamePlayer) {
+        getGamePlayers().add(gamePlayer);
+    }
 }

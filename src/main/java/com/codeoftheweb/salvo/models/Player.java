@@ -84,5 +84,7 @@ public class Player {
         this.password = password;
     }
 
-
+    public void addGamePlayer(GamePlayer gamePlayer) {
+        getGamePlayers().add(gamePlayer);
+    }
 }
