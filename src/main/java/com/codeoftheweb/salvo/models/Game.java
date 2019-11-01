@@ -64,12 +64,16 @@ public class Game {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
 //        dto.put("self", "esta vacio");
         dto.put("self", gamePlayer.getHits().stream().map(hit -> hit.makeDTO()));
-        dto.put("opponent", gamePlayerOpponent(gamePlayer).getHits().stream().map(hit -> hit.makeDTO()));
+        if (gamePlayerOpponent(gamePlayer) != null) {
+            dto.put("opponent", gamePlayerOpponent(gamePlayer).getHits().stream().map(hit -> hit.makeDTO()));
+        } else {
+            dto.put("opponent", new ArrayList<>());
+        }
         return dto;
     }
 
     public GamePlayer gamePlayerOpponent(GamePlayer gamePlayer) {
-        return gamePlayers.size() > 1 ? this.getGamePlayers().stream().filter(gp -> (gp.getPlayer().getUserName() != gamePlayer.getPlayer().getUserName())).findFirst().get() : null ;
+        return gamePlayers.size() > 1 ? this.getGamePlayers().stream().filter(gp -> (gp.getPlayer().getUserName() != gamePlayer.getPlayer().getUserName())).findFirst().get() : null;
 
     }
 
