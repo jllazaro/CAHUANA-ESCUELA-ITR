@@ -72,7 +72,6 @@ public class SalvoApplication {
             GamePlayer gamePlayer9 = new GamePlayer(game5, player1);
             GamePlayer gamePlayer10 = new GamePlayer(game5, player2);
 
-//            System.out.println(gamePlayer1.getGame().getGamePlayers().stream().map(a->a.getGame()));
 
 //            gamePlayer1.mergeGameAndPlayer();
 //            gamePlayer2.mergeGameAndPlayer();
@@ -164,8 +163,6 @@ public class SalvoApplication {
             hit7.loadHitLocationsBySalvo(salvo7);
             hit8.loadHitLocationsBySalvo(salvo8);
 
-            System.out.println("hit1.getLocations()");
-            System.out.println(hit1.getLocations());
 
 
             playerRepository.save(player1);

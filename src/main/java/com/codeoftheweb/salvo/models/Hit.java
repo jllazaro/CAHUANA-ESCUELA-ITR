@@ -94,7 +94,6 @@ public class Hit {
     }
 
     public List<String> getLocations() {
-        System.out.println(locations);
         return locations;
     }
 
