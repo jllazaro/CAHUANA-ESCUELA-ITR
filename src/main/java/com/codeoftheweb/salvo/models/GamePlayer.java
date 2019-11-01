@@ -162,7 +162,7 @@ public class GamePlayer {
     }
 
     public Integer shipMissedByHitTurn(Integer turn) {
-        AtomicInteger count= new AtomicInteger();
+        AtomicInteger count = new AtomicInteger();
         ships.stream().forEach(
                 ship -> {
                     if (totalHitsByTypeShip(ship.getType(), turn) >= ship.getLocations().size()) {
@@ -177,5 +177,12 @@ public class GamePlayer {
 
     public List<List<String>> shipsLocations() {
         return this.ships.stream().map(ship -> ship.getLocations()).collect(Collectors.toList());
+    }
+
+    public void addHit(Hit hit) {
+        hits.add(hit);
+    }
+    public GamePlayer opponent(){
+        return getGame().gamePlayerOpponent(this);
     }
 }

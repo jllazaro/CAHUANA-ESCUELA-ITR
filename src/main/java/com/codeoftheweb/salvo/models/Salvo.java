@@ -18,14 +18,14 @@ public class Salvo {
     private GamePlayer gamePlayer;
     private Integer turn;
     @ElementCollection
-    private List<String> locations;
+    private List<String> salvoLocations;
 
     public Salvo() {
     }
 
-    public Salvo(Integer turn, List<String> locations) {
+    public Salvo(Integer turn, List<String> salvoLocations) {
         this.turn = turn;
-        this.locations = locations;
+        this.salvoLocations = salvoLocations;
     }
 
     public long getId() {
@@ -49,15 +49,19 @@ public class Salvo {
     }
 
 
-    public List<String> getLocations() {
-        return locations;
+    public List<String> getSalvoLocations() {
+        return salvoLocations;
     }
 
     public Map<String, Object> makeSalvoDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("turn", this.getTurn());
         dto.put("player", this.getGamePlayer().getPlayer().getId());
-        dto.put("locations", this.getLocations());
+        dto.put("locations", this.getSalvoLocations());
         return dto;
+    }
+
+    public void setTurn(Integer turn) {
+        this.turn = turn;
     }
 }

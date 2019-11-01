@@ -35,7 +35,7 @@ public class Hit {
     }
 
     public void loadHitLocationsBySalvo(Salvo salvo) {
-        salvo.getLocations().stream().forEach(
+        salvo.getSalvoLocations().stream().forEach(
                 position ->
                 {
                     gamePlayer.getShips().stream().forEach(

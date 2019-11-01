@@ -52,12 +52,44 @@ public class Game {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", this.getId());
         dto.put("created", this.getCreationDate());
-        dto.put("gameState", "PLACESHIPS");
+        dto.put("gameState", this.state(gamePlayer, gamePlayerOpponent(gamePlayer)));
         dto.put("gamePlayers", this.getGamePlayers().stream().map(gp -> gp.makeGamePlayerDTO()));
         dto.put("ships", gamePlayer.getShips().stream().map(ship -> ship.makeShipDTO()));
         dto.put("salvoes", getGamePlayers().stream().flatMap(aGamePlayer -> aGamePlayer.getSalvoes().stream().map(salvo -> salvo.makeSalvoDTO())));
         dto.put("hits", this.hits(gamePlayer));
         return dto;
+    }
+
+    private String state(GamePlayer gamePlayerLogged, GamePlayer gamePlayerOpponent) {
+        Integer maxTurns = 101;
+        if (gamePlayerLogged.getShips().isEmpty()
+
+        ) {
+            return "PLACESHIPS";
+        }
+        if (gamePlayerOpponent == null) {
+            return "WAITINGFOROPP";
+        }
+        if (!gamePlayerOpponent.getShips().isEmpty()
+                && gamePlayerLogged.getShips().size() == gamePlayerLogged.shipMissedByHitTurn(maxTurns)) {
+            return "LOST";
+        }
+        if (!gamePlayerOpponent.getShips().isEmpty()
+                && gamePlayerOpponent.getShips().size() == gamePlayerOpponent.shipMissedByHitTurn(maxTurns)) {
+            return "WON";
+        }
+        if (!gamePlayerOpponent.getShips().isEmpty()
+                && gamePlayerOpponent.getShips().size() == gamePlayerOpponent.shipMissedByHitTurn(maxTurns)
+                && gamePlayerLogged.getShips().size() == gamePlayerLogged.shipMissedByHitTurn(maxTurns)) {
+            return "TIE";
+        }
+        if (gamePlayerOpponent.getShips().isEmpty()
+//                || !gamePlayerLogged.getSalvoes().isEmpty()
+                || gamePlayerLogged.getSalvoes().size() > gamePlayerOpponent.getSalvoes().size()
+        ) {
+            return "WAIT";
+        }
+        return "PLAY";
     }
 
     private Map<String, Object> hits(GamePlayer gamePlayer) {

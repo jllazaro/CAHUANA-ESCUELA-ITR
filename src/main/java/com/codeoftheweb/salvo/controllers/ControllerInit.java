@@ -24,6 +24,8 @@ public class ControllerInit {
     protected GamePlayerRepository gamePlayerRepository;
     @Autowired
     protected SalvoRepository salvoRepository;
+    @Autowired
+    protected HitRepository hitRepository;
 
 
     protected boolean isGuest(Authentication authentication) {
