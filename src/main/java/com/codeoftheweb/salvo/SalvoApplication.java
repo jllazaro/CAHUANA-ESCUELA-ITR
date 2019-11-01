@@ -107,7 +107,7 @@ public class SalvoApplication {
             Ship ship7 = new Ship("carrier", Arrays.asList("F8", "F9", "F10"));
             Ship ship8 = new Ship("destroyer", Arrays.asList("A3", "B3", "C3"));
 
-            Salvo salvo1 = new Salvo(1, Arrays.asList("A8", "A9"));
+            Salvo salvo1 = new Salvo(1, Arrays.asList("A8", "A9", "A10"));
             Salvo salvo2 = new Salvo(2, Arrays.asList("D3", "E3", "A10"));
             Salvo salvo3 = new Salvo(1, Arrays.asList("C1", "C2"));
             Salvo salvo4 = new Salvo(2, Arrays.asList("G8", "G9"));

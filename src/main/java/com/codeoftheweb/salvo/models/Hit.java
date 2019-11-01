@@ -14,8 +14,6 @@ public class Hit {
     private Integer turn;
     @ElementCollection
     private List<String> locations = new ArrayList<>();
-    //    private Map<String, Integer> damage = new HashMap<>();
-    //    private Integer missed;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "gamePlayer_id")
     private GamePlayer gamePlayer;
@@ -24,10 +22,8 @@ public class Hit {
     }
 
     public Hit(Salvo salvo, GamePlayer gamePlayer) {
-//        System.out.println("llega al constructor hit");
         this.gamePlayer = gamePlayer;
         this.turn = salvo.getTurn();
-//        this.loadHitLocationsBySalvo(salvo.getLocations());
     }
 
     public long getId() {
@@ -48,12 +44,8 @@ public class Hit {
                                 ship.getLocations().stream().forEach(
                                         positionShip ->
                                         {
-                                            System.out.println(position);
-                                            System.out.println(positionShip);
-                                            System.out.println(position.equals(positionShip));
                                             if (position.equals(positionShip)) {
                                                 getLocations().add(position);
-                                                System.out.println(getLocations().size());
                                             }
                                         });
                             }
@@ -75,8 +67,7 @@ public class Hit {
     }
 
     public Integer missed(Integer turn) {
-        gamePlayer.shipMissedByHitTurn( turn);
-        return 0;
+     return    gamePlayer.shipMissedByHitTurn( turn);
     }
 
     public Map<String, Object> damages() {

@@ -162,25 +162,15 @@ public class GamePlayer {
     }
 
     public Integer shipMissedByHitTurn(Integer turn) {
-        AtomicReference<Integer> count = new AtomicReference<>(0);
-        this.hits.stream().forEach(
-                hit -> {
-                    if (hit.getTurn() <= turn) {
-                        this.shipsLocations().stream().forEach(
-                                shipLocation -> {
-                                    if (shipLocation.stream().allMatch(
-                                            posiShip ->
-                                                    hit.getLocations().stream().anyMatch(
-                                                            posiHit ->
-                                                                    posiHit == posiShip
-                                                    )
-                                    )) {
-                                        count.getAndSet(count.get() + 1);
-                                    }
-                                }
-                        );
+        AtomicInteger count= new AtomicInteger();
+        ships.stream().forEach(
+                ship -> {
+                    if (totalHitsByTypeShip(ship.getType(), turn) >= ship.getLocations().size()) {
+                        count.getAndIncrement();
                     }
                 }
+
+
         );
         return count.get();
     }
