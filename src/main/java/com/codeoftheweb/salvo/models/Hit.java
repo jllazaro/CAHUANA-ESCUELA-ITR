@@ -105,4 +105,8 @@ public class Hit {
     public void setGamePlayer(GamePlayer gamePlayer) {
         this.gamePlayer = gamePlayer;
     }
+
+    public void setLocations(List<String> locations) {
+        this.locations = locations;
+    }
 }

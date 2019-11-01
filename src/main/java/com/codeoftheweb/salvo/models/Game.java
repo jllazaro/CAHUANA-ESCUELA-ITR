@@ -67,7 +67,8 @@ public class Game {
         ) {
             return "PLACESHIPS";
         }
-        if (gamePlayerOpponent == null) {
+        if (gamePlayerOpponent == null
+        || gamePlayerOpponent.getShips().isEmpty()) {
             return "WAITINGFOROPP";
         }
         if (!gamePlayerOpponent.getShips().isEmpty()

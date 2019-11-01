@@ -38,8 +38,6 @@ public class GamePlayerSalvoesController extends ControllerInit {
             return new ResponseEntity<>(makeMap("error", "YA TIENE salvos para ese turno"), HttpStatus.FORBIDDEN);
         }
         gamePLayer.addSalvo(salvo);
-        gamePlayerRepository.save(gamePLayer);
-        salvoRepository.save(salvo);
         Hit hit = new Hit(salvo,gamePLayer.opponent());
         hit.loadHitLocationsBySalvo(salvo);
         System.out.println("gamePLayer.opponent()");
@@ -48,8 +46,10 @@ public class GamePlayerSalvoesController extends ControllerInit {
         System.out.println(salvo.makeSalvoDTO());
         System.out.println("hit.makeDTO()");
         System.out.println(hit.makeDTO());
-        hitRepository.save(hit);
+        gamePlayerRepository.save(gamePLayer);
         gamePlayerRepository.save(gamePLayer.opponent());
+        salvoRepository.save(salvo);
+        hitRepository.save(hit);
 
         return new ResponseEntity<>(makeMap("OK", "OK"), HttpStatus.CREATED);
     }

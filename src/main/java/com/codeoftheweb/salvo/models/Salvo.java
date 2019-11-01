@@ -64,4 +64,8 @@ public class Salvo {
     public void setTurn(Integer turn) {
         this.turn = turn;
     }
+
+    public void setSalvoLocations(List<String> salvoLocations) {
+        this.salvoLocations = salvoLocations;
+    }
 }
