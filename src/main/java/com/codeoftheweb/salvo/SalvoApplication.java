@@ -108,7 +108,7 @@ public class SalvoApplication {
             Ship ship8 = new Ship("destroyer", Arrays.asList("A3", "B3", "C3"));
 
             Salvo salvo1 = new Salvo(1, Arrays.asList("A8", "A9"));
-            Salvo salvo2 = new Salvo(2, Arrays.asList("D3", "E3"));
+            Salvo salvo2 = new Salvo(2, Arrays.asList("D3", "E3", "A10"));
             Salvo salvo3 = new Salvo(1, Arrays.asList("C1", "C2"));
             Salvo salvo4 = new Salvo(2, Arrays.asList("G8", "G9"));
             Salvo salvo5 = new Salvo(1, Arrays.asList("H3", "I3"));
@@ -128,15 +128,13 @@ public class SalvoApplication {
             Score score10 = new Score(game5, player2, 0.50, LocalDateTime.now());
 
             Hit hit1 = new Hit(salvo1,gamePlayer1);
-            System.out.println("hit1.getLocations()");
-            System.out.println(hit1.getLocations());
             Hit hit2 = new Hit(salvo2,gamePlayer1);
             Hit hit3 = new Hit(salvo3,gamePlayer2);
             Hit hit4 = new Hit(salvo4,gamePlayer2);
-            Hit hit5 = new Hit(salvo5,gamePlayer4);
-            Hit hit6 = new Hit(salvo6,gamePlayer4);
-            Hit hit7 = new Hit(salvo7,gamePlayer3);
-            Hit hit8 = new Hit(salvo7,gamePlayer3);
+            Hit hit5 = new Hit(salvo5,gamePlayer3);
+            Hit hit6 = new Hit(salvo6,gamePlayer3);
+            Hit hit7 = new Hit(salvo7,gamePlayer4);
+            Hit hit8 = new Hit(salvo8,gamePlayer4);
 
 
             gamePlayer1.addShip(ship1);
@@ -224,16 +222,6 @@ public class SalvoApplication {
             scoreRepository.save(score10);
 
 
-            hitRepository.save(hit1);
-            hitRepository.save(hit2);
-            hitRepository.save(hit3);
-            hitRepository.save(hit4);
-            hitRepository.save(hit5);
-            hitRepository.save(hit6);
-            hitRepository.save(hit7);
-            hitRepository.save(hit8);
-            System.out.println("hit1.getLocations()");
-            System.out.println(hit1.getLocations());
             hitRepository.save(hit1);
             hitRepository.save(hit2);
             hitRepository.save(hit3);
