@@ -134,6 +134,7 @@ public class SalvoApplication {
             Hit hit6 = new Hit(salvo6,gamePlayer3);
             Hit hit7 = new Hit(salvo7,gamePlayer4);
             Hit hit8 = new Hit(salvo8,gamePlayer4);
+            
 
 
             gamePlayer1.addShip(ship1);
