@@ -60,35 +60,38 @@ public class Game {
         return dto;
     }
 
-    private String state(GamePlayer gamePlayerLogged, GamePlayer gamePlayerOpponent) {
+    public String state(GamePlayer gamePlayerLogged, GamePlayer gamePlayerOpponent) {
         Integer maxTurns = 101;
+        Integer maxShipByPlayer = 5;
         if (gamePlayerLogged.getShips().isEmpty()
 
         ) {
             return "PLACESHIPS";
         }
-        if (gamePlayerOpponent == null) {
+        if (gamePlayerOpponent == null || gamePlayerOpponent.getShips().isEmpty()) {
             return "WAITINGFOROPP";
         }
-        if (!gamePlayerOpponent.getShips().isEmpty()
-                && gamePlayerLogged.getShips().size() == gamePlayerLogged.shipMissedByHitTurn(maxTurns)) {
-            return "LOST";
+        if (gamePlayerLogged.getSalvoes().isEmpty() || gamePlayerOpponent.getSalvoes().isEmpty()) {
+            return "PLAY";
         }
-        if (!gamePlayerOpponent.getShips().isEmpty()
-                && gamePlayerOpponent.getShips().size() == gamePlayerOpponent.shipMissedByHitTurn(maxTurns)) {
-            return "WON";
+        if (gamePlayerLogged.shipMissedByHitTurn(maxTurns) == maxShipByPlayer
+                || gamePlayerOpponent.shipMissedByHitTurn(maxTurns) == maxShipByPlayer) {
+            if (gamePlayerLogged.getShips().size() == gamePlayerLogged.shipMissedByHitTurn(maxTurns)
+                    && gamePlayerOpponent.getShips().size() == gamePlayerOpponent.shipMissedByHitTurn(maxTurns)) {
+                return "TIED";
+            }
+            if (gamePlayerLogged.shipMissedByHitTurn(maxTurns) == maxShipByPlayer) {
+                return "LOST";
+            }
+
+            if (gamePlayerOpponent.shipMissedByHitTurn(maxTurns) == maxShipByPlayer) {
+                return "WON";
+            }
         }
-        if (!gamePlayerOpponent.getShips().isEmpty()
-                && gamePlayerOpponent.getShips().size() == gamePlayerOpponent.shipMissedByHitTurn(maxTurns)
-                && gamePlayerLogged.getShips().size() == gamePlayerLogged.shipMissedByHitTurn(maxTurns)) {
-            return "TIE";
+        if (gamePlayerLogged.getSalvoes().size() == gamePlayerOpponent.getSalvoes().size()) {
+            return "PLAY";
         }
-        if (!gamePlayerOpponent.getShips().isEmpty()
-                || gamePlayerLogged.getSalvoes().size() > gamePlayerOpponent.getSalvoes().size()
-        ) {
-            return "WAIT";
-        }
-        return "PLAY";
+        return "WAIT";
     }
 
     private Map<String, Object> hits(GamePlayer gamePlayer) {

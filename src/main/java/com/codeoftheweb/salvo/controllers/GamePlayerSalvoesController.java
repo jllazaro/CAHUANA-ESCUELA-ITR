@@ -37,17 +37,8 @@ public class GamePlayerSalvoesController extends ControllerInit {
         if (gamePLayer.haveSalvoWithTurn(salvo.getTurn())) {
             return new ResponseEntity<>(makeMap("error", "YA TIENE salvos para ese turno"), HttpStatus.FORBIDDEN);
         }
-        //gamePLayer.addSalvo(salvo);
         Hit hit = new Hit(salvo,gamePLayer.opponent());
         hit.loadHitLocationsBySalvo(salvo);
-        System.out.println("gamePLayer.opponent()");
-        System.out.println(gamePLayer.opponent().makeGamePlayerDTO());
-        System.out.println("salvo.makeSalvoDTO()");
-        System.out.println(salvo.makeSalvoDTO());
-        System.out.println("hit.makeDTO()");
-        System.out.println(hit.makeDTO());
-        //gamePlayerRepository.save(gamePLayer);
-        //gamePlayerRepository.save(gamePLayer.opponent());
         salvoRepository.save(salvo);
         hitRepository.save(hit);
 

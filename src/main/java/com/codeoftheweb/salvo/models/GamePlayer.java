@@ -185,4 +185,5 @@ public class GamePlayer {
     public GamePlayer opponent(){
         return getGame().gamePlayerOpponent(this);
     }
+
 }
