@@ -67,8 +67,7 @@ public class Game {
         ) {
             return "PLACESHIPS";
         }
-        if (gamePlayerOpponent == null
-        || gamePlayerOpponent.getShips().isEmpty()) {
+        if (gamePlayerOpponent == null) {
             return "WAITINGFOROPP";
         }
         if (!gamePlayerOpponent.getShips().isEmpty()
@@ -84,8 +83,7 @@ public class Game {
                 && gamePlayerLogged.getShips().size() == gamePlayerLogged.shipMissedByHitTurn(maxTurns)) {
             return "TIE";
         }
-        if (gamePlayerOpponent.getShips().isEmpty()
-//                || !gamePlayerLogged.getSalvoes().isEmpty()
+        if (!gamePlayerOpponent.getShips().isEmpty()
                 || gamePlayerLogged.getSalvoes().size() > gamePlayerOpponent.getSalvoes().size()
         ) {
             return "WAIT";
@@ -95,7 +93,6 @@ public class Game {
 
     private Map<String, Object> hits(GamePlayer gamePlayer) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
-//        dto.put("self", "esta vacio");
         dto.put("self", gamePlayer.getHits().stream().map(hit -> hit.makeDTO()));
         if (gamePlayerOpponent(gamePlayer) != null) {
             dto.put("opponent", gamePlayerOpponent(gamePlayer).getHits().stream().map(hit -> hit.makeDTO()));
