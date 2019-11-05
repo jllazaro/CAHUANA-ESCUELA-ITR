@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Entity
 public class Game {
@@ -52,7 +53,7 @@ public class Game {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", this.getId());
         dto.put("created", this.getCreationDate());
-        dto.put("gameState", this.state(gamePlayer, gamePlayerOpponent(gamePlayer)));
+        dto.put("gameState", this.state(gamePlayer));
         dto.put("gamePlayers", this.getGamePlayers().stream().map(gp -> gp.makeGamePlayerDTO()));
         dto.put("ships", gamePlayer.getShips().stream().map(ship -> ship.makeShipDTO()));
         dto.put("salvoes", getGamePlayers().stream().flatMap(aGamePlayer -> aGamePlayer.getSalvoes().stream().map(salvo -> salvo.makeSalvoDTO())));
@@ -60,35 +61,37 @@ public class Game {
         return dto;
     }
 
-    public String state(GamePlayer gamePlayerLogged, GamePlayer gamePlayerOpponent) {
+    public String state(GamePlayer gamePlayerLogged) {
         Integer maxTurns = 101;
         Integer maxShipByPlayer = 5;
+
         if (gamePlayerLogged.getShips().isEmpty()
 
         ) {
             return "PLACESHIPS";
         }
-        if (gamePlayerOpponent == null || gamePlayerOpponent.getShips().isEmpty()) {
+        if (gamePlayerOpponent(gamePlayerLogged) == null || gamePlayerOpponent(gamePlayerLogged).getShips().isEmpty()) {
             return "WAITINGFOROPP";
         }
-        if (gamePlayerLogged.getSalvoes().isEmpty() || gamePlayerOpponent.getSalvoes().isEmpty()) {
+        if (gamePlayerLogged.getSalvoes().isEmpty() || gamePlayerOpponent(gamePlayerLogged).getSalvoes().isEmpty()) {
             return "PLAY";
         }
-        if (gamePlayerLogged.shipMissedByHitTurn(maxTurns) == maxShipByPlayer
-                || gamePlayerOpponent.shipMissedByHitTurn(maxTurns) == maxShipByPlayer) {
+        if (gamePlayerLogged.getSalvoes().size() == gamePlayerOpponent(gamePlayerLogged).getSalvoes().size()
+                && (gamePlayerLogged.shipMissedByHitTurn(maxTurns) == maxShipByPlayer
+                || gamePlayerOpponent(gamePlayerLogged).shipMissedByHitTurn(maxTurns) == maxShipByPlayer)) {
             if (gamePlayerLogged.getShips().size() == gamePlayerLogged.shipMissedByHitTurn(maxTurns)
-                    && gamePlayerOpponent.getShips().size() == gamePlayerOpponent.shipMissedByHitTurn(maxTurns)) {
+                    && gamePlayerOpponent(gamePlayerLogged).getShips().size() == gamePlayerOpponent(gamePlayerLogged).shipMissedByHitTurn(maxTurns)) {
                 return "TIED";
             }
             if (gamePlayerLogged.shipMissedByHitTurn(maxTurns) == maxShipByPlayer) {
                 return "LOST";
             }
 
-            if (gamePlayerOpponent.shipMissedByHitTurn(maxTurns) == maxShipByPlayer) {
+            if (gamePlayerOpponent(gamePlayerLogged).shipMissedByHitTurn(maxTurns) == maxShipByPlayer) {
                 return "WON";
             }
         }
-        if (gamePlayerLogged.getSalvoes().size() == gamePlayerOpponent.getSalvoes().size()) {
+        if (gamePlayerLogged.getSalvoes().size() <= gamePlayerOpponent(gamePlayerLogged).getSalvoes().size()) {
             return "PLAY";
         }
         return "WAIT";
@@ -96,9 +99,9 @@ public class Game {
 
     private Map<String, Object> hits(GamePlayer gamePlayer) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
-        dto.put("self", gamePlayer.getHits().stream().map(hit -> hit.makeDTO()));
+        dto.put("self", gamePlayer.getHits().stream().sorted(Comparator.comparingInt(Hit::getTurn)).map(hit -> hit.makeDTO()));
         if (gamePlayerOpponent(gamePlayer) != null) {
-            dto.put("opponent", gamePlayerOpponent(gamePlayer).getHits().stream().map(hit -> hit.makeDTO()));
+            dto.put("opponent", gamePlayerOpponent(gamePlayer).getHits().stream().sorted(Comparator.comparingInt(Hit::getTurn)).map(hit -> hit.makeDTO()));
         } else {
             dto.put("opponent", new ArrayList<>());
         }

@@ -109,6 +109,16 @@ public class Hit {
     public void setLocations(List<String> locations) {
         this.locations = locations;
     }
+
+    public int compareTo(Hit hit2) {
+        if (turn < hit2.getTurn()) {
+            return -1;
+        }
+        if (turn > hit2.getTurn()) {
+            return 1;
+        }
+        return 0;
+    }
 }
 
 

@@ -68,4 +68,6 @@ public class Salvo {
     public void setSalvoLocations(List<String> salvoLocations) {
         this.salvoLocations = salvoLocations;
     }
+
+
 }

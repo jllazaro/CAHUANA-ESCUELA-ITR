@@ -33,11 +33,19 @@ public class GamePlayerSalvoesController extends ControllerInit {
         if (isGuest(authentication) || authentication.getName() != gamePLayer.getPlayer().getUserName() || gamePLayer.equals(null)) {
             return new ResponseEntity<>(makeMap("error", "ERROR DE VALIDACION DE DATOS"), HttpStatus.UNAUTHORIZED);
         }
-
+        if (gamePLayer.getGame().state(gamePLayer) == "WON"
+                || gamePLayer.getGame().state(gamePLayer) == "TIED"
+                || gamePLayer.getGame().state(gamePLayer) == "LOST"
+        ) {
+            return new ResponseEntity<>(makeMap("error", "EL JUEGO YA TERMINO"), HttpStatus.FORBIDDEN);
+        }
         if (gamePLayer.haveSalvoWithTurn(salvo.getTurn())) {
             return new ResponseEntity<>(makeMap("error", "YA TIENE salvos para ese turno"), HttpStatus.FORBIDDEN);
         }
-        Hit hit = new Hit(salvo,gamePLayer.opponent());
+        if (salvo.getSalvoLocations().size()>5) {
+            return new ResponseEntity<>(makeMap("error", "NO PUEDE ENVIAR MAS DE 5 SALVOS"), HttpStatus.FORBIDDEN);
+        }
+        Hit hit = new Hit(salvo, gamePLayer.opponent());
         hit.loadHitLocationsBySalvo(salvo);
         salvoRepository.save(salvo);
         hitRepository.save(hit);

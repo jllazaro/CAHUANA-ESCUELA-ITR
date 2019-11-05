@@ -111,7 +111,7 @@ public class GamePlayer {
     public boolean haveSalvoWithTurn(Integer turn) {
         return this.salvoes.stream().anyMatch(salvo -> salvo.getTurn() == turn);
     }
-    
+
     public Set<Hit> getHits() {
         return hits;
     }
@@ -182,7 +182,8 @@ public class GamePlayer {
     public void addHit(Hit hit) {
         hits.add(hit);
     }
-    public GamePlayer opponent(){
+
+    public GamePlayer opponent() {
         return getGame().gamePlayerOpponent(this);
     }
 
