@@ -115,16 +115,29 @@ public class SalvoApplication {
             Salvo salvo7 = new Salvo(1, Arrays.asList("F8", "F9", "F10"));
             Salvo salvo8 = new Salvo(2, Arrays.asList("A3", "B3", "C3"));
 
-            Score score1 = new Score(game1, player1, 1.00, LocalDateTime.now());
-            Score score2 = new Score(game1, player2, 1.00, LocalDateTime.now());
-            Score score3 = new Score(game2, player3, 1.00, LocalDateTime.now());
-            Score score4 = new Score(game2, player4, 1.00, LocalDateTime.now());
-            Score score5 = new Score(game3, player2, 1.00, LocalDateTime.now());
-            Score score6 = new Score(game3, player3, 1.00, LocalDateTime.now());
-            Score score7 = new Score(game4, player1, 0.00, LocalDateTime.now());
-            Score score8 = new Score(game4, player2, 0.00, LocalDateTime.now());
-            Score score9 = new Score(game5, player1, 0.50, LocalDateTime.now());
-            Score score10 = new Score(game5, player2, 0.50, LocalDateTime.now());
+
+            Score score1 = new Score(gamePlayer1, 1.00);
+            Score score2 = new Score(gamePlayer2, 1.00);
+            Score score3 = new Score(gamePlayer3, 0.50);
+            Score score4 = new Score(gamePlayer4, 0.50);
+            Score score5 = new Score(gamePlayer5, 1.00);
+            Score score6 = new Score(gamePlayer6, 0.00);
+            Score score7 = new Score(gamePlayer7, 1.00);
+            Score score8 = new Score(gamePlayer8, 0.00);
+
+
+//            Score score1 = new Score(game1, player1, 1.00, LocalDateTime.now());
+//            Score score2 = new Score(game1, player2, 1.00, LocalDateTime.now());
+//            Score score3 = new Score(game2, player3, 1.00, LocalDateTime.now());
+//            Score score4 = new Score(game2, player4, 1.00, LocalDateTime.now());
+//            Score score5 = new Score(game3, player2, 1.00, LocalDateTime.now());
+//            Score score6 = new Score(game3, player3, 1.00, LocalDateTime.now());
+//            Score score7 = new Score(game4, player1, 0.00, LocalDateTime.now());
+//            Score score8 = new Score(game4, player2, 0.00, LocalDateTime.now());
+//            Score score9 = new Score(game5, player1, 0.50, LocalDateTime.now());
+//            Score score10 = new Score(game5, player2, 0.50, LocalDateTime.now());
+
+
 
             Hit hit1 = new Hit(salvo1,gamePlayer1);
             Hit hit2 = new Hit(salvo2,gamePlayer1);
@@ -154,6 +167,7 @@ public class SalvoApplication {
             gamePlayer3.addSalvo(salvo8);
             gamePlayer4.addSalvo(salvo5);
             gamePlayer4.addSalvo(salvo6);
+
 
             hit1.loadHitLocationsBySalvo(salvo1);
             hit2.loadHitLocationsBySalvo(salvo2);
@@ -216,8 +230,8 @@ public class SalvoApplication {
             scoreRepository.save(score6);
             scoreRepository.save(score7);
             scoreRepository.save(score8);
-            scoreRepository.save(score9);
-            scoreRepository.save(score10);
+//            scoreRepository.save(score9);
+//            scoreRepository.save(score10);
 
 
             hitRepository.save(hit1);

@@ -37,18 +37,24 @@ public class GamePlayerSalvoesController extends ControllerInit {
                 || gamePLayer.getGame().state(gamePLayer) == "TIED"
                 || gamePLayer.getGame().state(gamePLayer) == "LOST"
         ) {
+            gamePLayer.getGame().getScores().forEach(
+                    score -> {
+                        scoreRepository.save(score);
+                    }
+            );
             return new ResponseEntity<>(makeMap("error", "EL JUEGO YA TERMINO"), HttpStatus.FORBIDDEN);
         }
         if (gamePLayer.haveSalvoWithTurn(salvo.getTurn())) {
             return new ResponseEntity<>(makeMap("error", "YA TIENE salvos para ese turno"), HttpStatus.FORBIDDEN);
         }
-        if (salvo.getSalvoLocations().size()>5) {
+        if (salvo.getSalvoLocations().size() > 5) {
             return new ResponseEntity<>(makeMap("error", "NO PUEDE ENVIAR MAS DE 5 SALVOS"), HttpStatus.FORBIDDEN);
         }
         Hit hit = new Hit(salvo, gamePLayer.opponent());
         hit.loadHitLocationsBySalvo(salvo);
         salvoRepository.save(salvo);
         hitRepository.save(hit);
+        gamePlayerRepository.save(gamePLayer);
 
         return new ResponseEntity<>(makeMap("OK", "OK"), HttpStatus.CREATED);
     }

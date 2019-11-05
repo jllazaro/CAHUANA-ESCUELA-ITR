@@ -1,6 +1,7 @@
 package com.codeoftheweb.salvo.controllers;
 
 import com.codeoftheweb.salvo.repositories.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,7 +27,8 @@ public class ControllerInit {
     protected SalvoRepository salvoRepository;
     @Autowired
     protected HitRepository hitRepository;
-
+    @Autowired
+    ScoreRepository scoreRepository;
 
     protected boolean isGuest(Authentication authentication) {
         return authentication == null || authentication instanceof AnonymousAuthenticationToken;

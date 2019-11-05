@@ -24,20 +24,19 @@ public class Score {
 
     public Score() {
     }
-
-    public Score(Game game, Player player, Double score) {
-        this.game = game;
-        this.player = player;
+    public Score(GamePlayer gamePlayer, Double score) {
+        this.game = gamePlayer.getGame();
+        this.player = gamePlayer.getPlayer();
         this.score = score;
-        this.game.addScore(this);
+        this.finishDate = LocalDateTime.now();
     }
-
     public Score(Game game, Player player, Double score, LocalDateTime finishDate) {
         this.game = game;
         this.player = player;
         this.score = score;
         this.finishDate = finishDate;
-        this.game.addScore(this);
+//        this.game.addScore(this);
+//        this.player.addScore(this);
     }
 
     public Map<String, Object> makeDTO() {
@@ -86,6 +85,10 @@ public class Score {
 
     public void setFinishDate(LocalDateTime finishDate) {
         this.finishDate = finishDate;
+    }
+
+    public boolean isOfGamePlayer(GamePlayer gamePlayer) {
+        return gamePlayer.getGame().getId() == this.getGame().getId() && gamePlayer.getPlayer().getId() == this.getPlayer().getId();
     }
 }
 

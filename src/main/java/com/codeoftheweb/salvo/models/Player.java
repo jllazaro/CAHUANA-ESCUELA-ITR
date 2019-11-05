@@ -54,11 +54,7 @@ public class Player {
         this.gamePlayers = gamePlayers;
     }
 
-    public Score getScore(Game game) {
-        return scores.stream()
-                .filter(score -> score.getGame().getId() == game.getId())
-                .findFirst().orElse(null);
-    }
+
 
     public String getPassword() {
         return password;
@@ -86,5 +82,9 @@ public class Player {
 
     public void addGamePlayer(GamePlayer gamePlayer) {
         getGamePlayers().add(gamePlayer);
+    }
+
+    public void addScore(Score score) {
+        scores.add(score);
     }
 }

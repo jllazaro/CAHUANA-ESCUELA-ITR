@@ -1,15 +1,17 @@
 package com.codeoftheweb.salvo.models;
 
+import com.codeoftheweb.salvo.repositories.ScoreRepository;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Entity
 public class Game {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -48,7 +50,11 @@ public class Game {
         return dto;
     }
 
-
+    public Score getScore(Game game) {
+        return scores.stream()
+                .filter(score -> score.getGame().getId() == game.getId())
+                .findFirst().orElse(null);
+    }
     public Map<String, Object> makeGameDTO_gameViewWithSalvoes(GamePlayer gamePlayer) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", this.getId());
@@ -63,7 +69,6 @@ public class Game {
 
     public String state(GamePlayer gamePlayerLogged) {
         Integer maxTurns = 101;
-        Integer maxShipByPlayer = 5;
 
         if (gamePlayerLogged.getShips().isEmpty()
 
@@ -77,17 +82,17 @@ public class Game {
             return "PLAY";
         }
         if (gamePlayerLogged.getSalvoes().size() == gamePlayerOpponent(gamePlayerLogged).getSalvoes().size()
-                && (gamePlayerLogged.shipMissedByHitTurn(maxTurns) == maxShipByPlayer
-                || gamePlayerOpponent(gamePlayerLogged).shipMissedByHitTurn(maxTurns) == maxShipByPlayer)) {
+                && (gamePlayerLogged.shipMissedByHitTurn(maxTurns) == gamePlayerLogged.getShips().size()
+                || gamePlayerOpponent(gamePlayerLogged).shipMissedByHitTurn(maxTurns) == gamePlayerOpponent(gamePlayerLogged).getShips().size())) {
             if (gamePlayerLogged.getShips().size() == gamePlayerLogged.shipMissedByHitTurn(maxTurns)
                     && gamePlayerOpponent(gamePlayerLogged).getShips().size() == gamePlayerOpponent(gamePlayerLogged).shipMissedByHitTurn(maxTurns)) {
                 return "TIED";
             }
-            if (gamePlayerLogged.shipMissedByHitTurn(maxTurns) == maxShipByPlayer) {
+            if (gamePlayerLogged.shipMissedByHitTurn(maxTurns) == gamePlayerLogged.getShips().size()) {
                 return "LOST";
             }
 
-            if (gamePlayerOpponent(gamePlayerLogged).shipMissedByHitTurn(maxTurns) == maxShipByPlayer) {
+            if (gamePlayerOpponent(gamePlayerLogged).shipMissedByHitTurn(maxTurns) == gamePlayerOpponent(gamePlayerLogged).getShips().size()) {
                 return "WON";
             }
         }
@@ -113,9 +118,7 @@ public class Game {
 
     }
 
-    public void addScore(Score score) {
-        this.scores.add(score);
-    }
+
 
     public void setId(long id) {
         this.id = id;
@@ -135,5 +138,9 @@ public class Game {
 
     public void addGamePlayer(GamePlayer gamePlayer) {
         getGamePlayers().add(gamePlayer);
+    }
+
+    public void addScore(Score score) {
+        scores.add(score);
     }
 }
