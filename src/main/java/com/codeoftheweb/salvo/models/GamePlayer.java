@@ -18,18 +18,14 @@ public class GamePlayer {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "player_id")
     private Player player;
-
-    @ManyToOne(fetch = FetchType.EAGER)
+   @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "game_id")
     private Game game;
-
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Ship> ships = new HashSet<>();
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
     private Set<Salvo> salvoes = new HashSet<>();
-//    @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
-//    private Set<Hit> hits = new HashSet<>();
 
     public GamePlayer() {
     }
@@ -38,7 +34,6 @@ public class GamePlayer {
         this.game = game;
         this.player = player;
     }
-
 
     public Map<String, Object> makeGamePlayerDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
@@ -62,13 +57,11 @@ public class GamePlayer {
     public void addShip(Ship ship) {
         ship.setGamePlayer(this);
         ships.add(ship);
-
     }
 
     public void addSalvo(Salvo salvo) {
         salvo.setGamePlayer(this);
         salvoes.add(salvo);
-
     }
 
     public void setShipses(List<Ship> ships) {
@@ -80,8 +73,7 @@ public class GamePlayer {
     }
 
     public Score getScore() {
-        return
-                player.getScore(this.getGame());
+        return player.getScore(this.getGame());
     }
 
     public void setId(long id) {
@@ -112,31 +104,19 @@ public class GamePlayer {
         return this.salvoes.stream().anyMatch(salvo -> salvo.getTurn() == turn);
     }
 
-//    public Set<Hit> getHits() {
-//        return hits;
-//    }
-//
-//    public void setHits(Set<Hit> hits) {
-//        this.hits = hits;
-//    }
-
     public int totalHitsByTypeShip(String type, Integer turn) {
-
         AtomicReference<Integer> count = new AtomicReference<>(0);
         this.salvoes.stream().forEach(
                 salvo -> {
                     if (salvo.getTurn() <= turn) {
-
                         count.updateAndGet(v -> v + (hitsByTypeShip(salvo, type)));
                     }
                 }
         );
         return count.get();
-
     }
 
     public int hitsByTypeShip(Salvo salvo, String type) {
-
         AtomicInteger count = new AtomicInteger();
         this.shipsOfType(type).stream().forEach(
                 ship -> {
@@ -149,7 +129,6 @@ public class GamePlayer {
                                             }
                                         }
                                 );
-
                             }
                     );
                 }
@@ -169,8 +148,6 @@ public class GamePlayer {
                         count.getAndIncrement();
                     }
                 }
-
-
         );
         return count.get();
     }
@@ -178,10 +155,6 @@ public class GamePlayer {
     public List<List<String>> shipsLocations() {
         return this.ships.stream().map(ship -> ship.getLocations()).collect(Collectors.toList());
     }
-//
-//    public void addHit(Hit hit) {
-//        hits.add(hit);
-//    }
 
     public GamePlayer opponent() {
         return getGame().gamePlayerOpponent(this);

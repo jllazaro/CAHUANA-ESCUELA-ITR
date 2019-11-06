@@ -45,13 +45,8 @@ public class GamePlayerSalvoesController extends ControllerInit {
         if (salvo.getSalvoLocations().size() > 5) {
             return new ResponseEntity<>(makeMap("error", "NO PUEDE ENVIAR MAS DE 5 SALVOS"), HttpStatus.FORBIDDEN);
         }
-//        Hit hit = new Hit(salvo, gamePLayer.opponent());
-//        hit.loadHitLocationsBySalvo(salvo);
-//        hit.setMissed(salvo.getSalvoLocations().size() - hit.getLocations().size());
         salvoRepository.save(salvo);
-//        hitRepository.save(hit);
         gamePlayerRepository.save(gamePLayer);
-
         return new ResponseEntity<>(makeMap("OK", "OK"), HttpStatus.CREATED);
     }
 

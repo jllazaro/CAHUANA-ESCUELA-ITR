@@ -14,7 +14,6 @@ public class Ship {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "gamePlayer_id")
     private GamePlayer gamePlayer;
@@ -72,6 +71,4 @@ public class Ship {
     public void setLocations(List<String> locations) {
         this.locations = locations;
     }
-
-
 }

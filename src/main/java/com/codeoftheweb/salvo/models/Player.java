@@ -9,7 +9,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-
 @Entity
 public class Player {
     @Id
@@ -54,8 +53,6 @@ public class Player {
     public void setGamePlayers(Set<GamePlayer> gamePlayers) {
         this.gamePlayers = gamePlayers;
     }
-
-
 
     public String getPassword() {
         return password;

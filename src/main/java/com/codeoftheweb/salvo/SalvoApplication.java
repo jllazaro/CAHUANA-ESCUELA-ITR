@@ -132,26 +132,6 @@ public class SalvoApplication {
             Score score6 = new Score(gamePlayer6, 0.00);
             Score score7 = new Score(gamePlayer7, 1.00);
             Score score8 = new Score(gamePlayer8, 0.00);
-
-            /**##########################*/
-            /**INSTANCE HITS*/
-            /**##########################*/
-//            Hit hit1 = new Hit(salvo1, gamePlayer1);
-//            Hit hit2 = new Hit(salvo2, gamePlayer1);
-//            Hit hit3 = new Hit(salvo3, gamePlayer2);
-//            Hit hit4 = new Hit(salvo4, gamePlayer2);
-//            Hit hit5 = new Hit(salvo5, gamePlayer3);
-//            Hit hit6 = new Hit(salvo6, gamePlayer3);
-//            Hit hit7 = new Hit(salvo7, gamePlayer4);
-//            Hit hit8 = new Hit(salvo8, gamePlayer4);
-//            hit1.loadHitLocationsBySalvo(salvo1);
-//            hit2.loadHitLocationsBySalvo(salvo2);
-//            hit3.loadHitLocationsBySalvo(salvo3);
-//            hit4.loadHitLocationsBySalvo(salvo4);
-//            hit5.loadHitLocationsBySalvo(salvo5);
-//            hit6.loadHitLocationsBySalvo(salvo6);
-//            hit7.loadHitLocationsBySalvo(salvo7);
-//            hit8.loadHitLocationsBySalvo(salvo8);
             /**##########################*/
             /**PERSISTING PLAYERS*/
             /**##########################*/
@@ -214,17 +194,6 @@ public class SalvoApplication {
             scoreRepository.save(score6);
             scoreRepository.save(score7);
             scoreRepository.save(score8);
-            /**##########################*/
-            /**PERSISTING HITS*/
-            /**##########################*/
-//            hitRepository.save(hit1);
-//            hitRepository.save(hit2);
-//            hitRepository.save(hit3);
-//            hitRepository.save(hit4);
-//            hitRepository.save(hit5);
-//            hitRepository.save(hit6);
-//            hitRepository.save(hit7);
-//            hitRepository.save(hit8);
         };
     }
 }

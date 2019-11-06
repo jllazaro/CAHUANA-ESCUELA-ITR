@@ -38,10 +38,7 @@ public class Score {
         this.player = player;
         this.score = score;
         this.finishDate = finishDate;
-//        this.game.addScore(this);
-//        this.player.addScore(this);
     }
-
 
     private void setGameAndPlayer() {
         getPlayer().addScore(this);

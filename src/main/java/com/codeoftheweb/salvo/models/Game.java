@@ -1,9 +1,6 @@
 package com.codeoftheweb.salvo.models;
 
-import com.codeoftheweb.salvo.repositories.ScoreRepository;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,7 +26,6 @@ public class Game {
         Integer maxTurns = 101;
 
         if (gamePlayerLogged.getShips().isEmpty()
-
         ) {
             return "PLACESHIPS";
         }
@@ -105,11 +101,10 @@ public class Game {
 
     private Map<String, Object> hits(GamePlayer logged) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
-//        dto.put("self", logged.getHits().stream().sorted(Comparator.comparingInt(Hit::getTurn)).map(hit -> hit.makeDTO()));
         if (gamePlayerOpponent(logged) != null) {
             dto.put("self", logged.opponent().getSalvoes().stream().sorted(Comparator.comparingInt(Salvo::getTurn)).map(salvoOpp -> salvoOpp.makeDTOofHit()));
 
-            dto.put("opponent", logged.getSalvoes().stream().sorted(Comparator.comparingInt(Salvo::getTurn)).map(salvo-> salvo.makeDTOofHit()));
+            dto.put("opponent", logged.getSalvoes().stream().sorted(Comparator.comparingInt(Salvo::getTurn)).map(salvo -> salvo.makeDTOofHit()));
         } else {
             dto.put("self", new ArrayList<>());
             dto.put("opponent", new ArrayList<>());
@@ -119,9 +114,7 @@ public class Game {
 
     public GamePlayer gamePlayerOpponent(GamePlayer gamePlayer) {
         return gamePlayers.size() > 1 ? this.getGamePlayers().stream().filter(gp -> (gp.getPlayer().getUserName() != gamePlayer.getPlayer().getUserName())).findFirst().get() : null;
-
     }
-
 
     public void setId(long id) {
         this.id = id;

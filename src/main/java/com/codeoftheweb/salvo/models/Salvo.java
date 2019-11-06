@@ -51,7 +51,6 @@ public class Salvo {
         return turn;
     }
 
-
     public List<String> getSalvoLocations() {
         return salvoLocations;
     }
@@ -72,10 +71,8 @@ public class Salvo {
         this.salvoLocations = salvoLocations;
     }
 
-
     public Map<String, Object> makeDTOofHit() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
-//        dto.put("turn", "esta vacio");
         dto.put("turn", this.turn);
         dto.put("hitLocations", this.getHitLocations());
         dto.put("damages", this.damages());
