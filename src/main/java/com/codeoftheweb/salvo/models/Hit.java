@@ -17,6 +17,7 @@ public class Hit {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "gamePlayer_id")
     private GamePlayer gamePlayer;
+    private int missed;
 
     public Hit() {
     }
@@ -52,8 +53,6 @@ public class Hit {
                     );
                 }
         );
-
-
     }
 
     public Map<String, Object> makeDTO() {
@@ -62,12 +61,12 @@ public class Hit {
         dto.put("turn", this.turn);
         dto.put("hitLocations", this.getLocations());
         dto.put("damages", this.damages());
-        dto.put("missed", this.missed(this.getTurn()));
+        dto.put("missed", missed);
         return dto;
     }
 
     public Integer missed(Integer turn) {
-     return    gamePlayer.shipMissedByHitTurn( turn);
+        return gamePlayer.shipMissedByHitTurn(turn);
     }
 
     public Map<String, Object> damages() {
@@ -77,11 +76,11 @@ public class Hit {
         dto.put("submarineHits", gamePlayer.hitsByTypeShip(this, "submarine"));
         dto.put("destroyerHits", gamePlayer.hitsByTypeShip(this, "destroyer"));
         dto.put("patrolboatHits", gamePlayer.hitsByTypeShip(this, "patrolboat"));
-        dto.put("carrier",  gamePlayer.totalHitsByTypeShip("carrier",this.getTurn()));
-        dto.put("battleship", gamePlayer.totalHitsByTypeShip("battleship",this.getTurn() ));
-        dto.put("submarine", gamePlayer.totalHitsByTypeShip("submarine",this.getTurn() ));
-        dto.put("destroyer",gamePlayer.totalHitsByTypeShip("destroyer",this.getTurn() ));
-        dto.put("patrolboat", gamePlayer.totalHitsByTypeShip("patrolboat",this.getTurn() ));
+        dto.put("carrier", gamePlayer.totalHitsByTypeShip("carrier", this.getTurn()));
+        dto.put("battleship", gamePlayer.totalHitsByTypeShip("battleship", this.getTurn()));
+        dto.put("submarine", gamePlayer.totalHitsByTypeShip("submarine", this.getTurn()));
+        dto.put("destroyer", gamePlayer.totalHitsByTypeShip("destroyer", this.getTurn()));
+        dto.put("patrolboat", gamePlayer.totalHitsByTypeShip("patrolboat", this.getTurn()));
         return dto;
     }
 
@@ -118,6 +117,10 @@ public class Hit {
             return 1;
         }
         return 0;
+    }
+
+    public void setMissed(int i) {
+        missed = i;
     }
 }
 

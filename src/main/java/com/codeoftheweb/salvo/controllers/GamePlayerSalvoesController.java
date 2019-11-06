@@ -47,6 +47,7 @@ public class GamePlayerSalvoesController extends ControllerInit {
         }
         Hit hit = new Hit(salvo, gamePLayer.opponent());
         hit.loadHitLocationsBySalvo(salvo);
+        hit.setMissed(salvo.getSalvoLocations().size() - hit.getLocations().size());
         salvoRepository.save(salvo);
         hitRepository.save(hit);
         gamePlayerRepository.save(gamePLayer);
