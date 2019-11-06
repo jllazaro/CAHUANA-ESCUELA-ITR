@@ -29,10 +29,6 @@ import java.util.Arrays;
 
 @SpringBootApplication
 public class SalvoApplication {
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     public static void main(String[] args) {
         SpringApplication.run(SalvoApplication.class, args);
     }
@@ -43,24 +39,30 @@ public class SalvoApplication {
     }
 
     @Bean
-    public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository, SalvoRepository salvoRepository, ScoreRepository scoreRepository, HitRepository hitRepository) {
+    public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository, SalvoRepository salvoRepository, ScoreRepository scoreRepository) {
         return (args) -> {
+            /**##########################*/
+            /**INSTANCE PLAYERS*/
+            /**##########################*/
             Player player1 = new Player("j.bauer@ctu.gov", passwordEncoder().encode("123456"));
             Player player2 = new Player("c.obrian@ctu.gov", passwordEncoder().encode("123456"));
             Player player3 = new Player("kim_bauer@gmail.com", passwordEncoder().encode("123456"));
             Player player4 = new Player("t.almeida@ctu.gov", passwordEncoder().encode("123456"));
-
+            /**##########################*/
+            /**INSTANCE GAMES*/
+            /**##########################*/
             Game game1 = new Game();
             Game game2 = new Game();
             Game game3 = new Game();
             Game game4 = new Game();
             Game game5 = new Game();
-
             game2.setCreationDate(LocalDateTime.now().plusHours(1));
             game3.setCreationDate(LocalDateTime.now().plusHours(2));
             game4.setCreationDate(LocalDateTime.now().plusHours(3));
             game5.setCreationDate(LocalDateTime.now().plusHours(4));
-
+            /**##########################*/
+            /**INSTANCE GAMEPLAYERS*/
+            /**##########################*/
             GamePlayer gamePlayer1 = new GamePlayer(game1, player1);
             GamePlayer gamePlayer2 = new GamePlayer(game1, player2);
             GamePlayer gamePlayer3 = new GamePlayer(game2, player3);
@@ -71,21 +73,6 @@ public class SalvoApplication {
             GamePlayer gamePlayer8 = new GamePlayer(game4, player4);
             GamePlayer gamePlayer9 = new GamePlayer(game5, player1);
             GamePlayer gamePlayer10 = new GamePlayer(game5, player2);
-
-
-//            gamePlayer1.mergeGameAndPlayer();
-//            gamePlayer2.mergeGameAndPlayer();
-//            gamePlayer3.mergeGameAndPlayer();
-//            gamePlayer4.mergeGameAndPlayer();
-//            gamePlayer5.mergeGameAndPlayer();
-//            gamePlayer6.mergeGameAndPlayer();
-//            gamePlayer7.mergeGameAndPlayer();
-//            gamePlayer8.mergeGameAndPlayer();
-//            gamePlayer9.mergeGameAndPlayer();
-//            gamePlayer10.mergeGameAndPlayer();
-
-//
-//
             game1.getGamePlayers().add(gamePlayer1);
             game1.getGamePlayers().add(gamePlayer2);
             game2.getGamePlayers().add(gamePlayer3);
@@ -96,7 +83,9 @@ public class SalvoApplication {
             game4.getGamePlayers().add(gamePlayer8);
             game5.getGamePlayers().add(gamePlayer9);
             game5.getGamePlayers().add(gamePlayer10);
-
+            /**##########################*/
+            /**INSTANCE SHIPS*/
+            /**##########################*/
             Ship ship1 = new Ship("carrier", Arrays.asList("A8", "A9", "A10"));
             Ship ship2 = new Ship("destroyer", Arrays.asList("D3", "E3", "F3"));
             Ship ship3 = new Ship("battleship", Arrays.asList("C1", "C2", "C3"));
@@ -105,51 +94,6 @@ public class SalvoApplication {
             Ship ship6 = new Ship("battleship", Arrays.asList("D1", "D2", "D3"));
             Ship ship7 = new Ship("carrier", Arrays.asList("F8", "F9", "F10"));
             Ship ship8 = new Ship("destroyer", Arrays.asList("A3", "B3", "C3"));
-
-            Salvo salvo1 = new Salvo(1, Arrays.asList("A8", "A9", "A10"));
-            Salvo salvo2 = new Salvo(2, Arrays.asList("D3", "E3", "A10"));
-            Salvo salvo3 = new Salvo(1, Arrays.asList("C1", "C2"));
-            Salvo salvo4 = new Salvo(2, Arrays.asList("G8", "G9"));
-            Salvo salvo5 = new Salvo(1, Arrays.asList("H3", "I3"));
-            Salvo salvo6 = new Salvo(2, Arrays.asList("D1", "D2", "D3"));
-            Salvo salvo7 = new Salvo(1, Arrays.asList("F8", "F9", "F10"));
-            Salvo salvo8 = new Salvo(2, Arrays.asList("A3", "B3", "C3"));
-
-
-            Score score1 = new Score(gamePlayer1, 1.00);
-            Score score2 = new Score(gamePlayer2, 1.00);
-            Score score3 = new Score(gamePlayer3, 0.50);
-            Score score4 = new Score(gamePlayer4, 0.50);
-            Score score5 = new Score(gamePlayer5, 1.00);
-            Score score6 = new Score(gamePlayer6, 0.00);
-            Score score7 = new Score(gamePlayer7, 1.00);
-            Score score8 = new Score(gamePlayer8, 0.00);
-
-
-//            Score score1 = new Score(game1, player1, 1.00, LocalDateTime.now());
-//            Score score2 = new Score(game1, player2, 1.00, LocalDateTime.now());
-//            Score score3 = new Score(game2, player3, 1.00, LocalDateTime.now());
-//            Score score4 = new Score(game2, player4, 1.00, LocalDateTime.now());
-//            Score score5 = new Score(game3, player2, 1.00, LocalDateTime.now());
-//            Score score6 = new Score(game3, player3, 1.00, LocalDateTime.now());
-//            Score score7 = new Score(game4, player1, 0.00, LocalDateTime.now());
-//            Score score8 = new Score(game4, player2, 0.00, LocalDateTime.now());
-//            Score score9 = new Score(game5, player1, 0.50, LocalDateTime.now());
-//            Score score10 = new Score(game5, player2, 0.50, LocalDateTime.now());
-
-
-
-            Hit hit1 = new Hit(salvo1,gamePlayer1);
-            Hit hit2 = new Hit(salvo2,gamePlayer1);
-            Hit hit3 = new Hit(salvo3,gamePlayer2);
-            Hit hit4 = new Hit(salvo4,gamePlayer2);
-            Hit hit5 = new Hit(salvo5,gamePlayer3);
-            Hit hit6 = new Hit(salvo6,gamePlayer3);
-            Hit hit7 = new Hit(salvo7,gamePlayer4);
-            Hit hit8 = new Hit(salvo8,gamePlayer4);
-            
-
-
             gamePlayer1.addShip(ship1);
             gamePlayer1.addShip(ship2);
             gamePlayer2.addShip(ship3);
@@ -158,7 +102,17 @@ public class SalvoApplication {
             gamePlayer3.addShip(ship6);
             gamePlayer4.addShip(ship7);
             gamePlayer4.addShip(ship8);
-
+            /**##########################*/
+            /**INSTANCE SALVO*/
+            /**##########################*/
+            Salvo salvo1 = new Salvo(1, Arrays.asList("A8", "A9", "A10"));
+            Salvo salvo2 = new Salvo(2, Arrays.asList("D3", "E3", "A10"));
+            Salvo salvo3 = new Salvo(1, Arrays.asList("C1", "C2"));
+            Salvo salvo4 = new Salvo(2, Arrays.asList("G8", "G9"));
+            Salvo salvo5 = new Salvo(1, Arrays.asList("H3", "I3"));
+            Salvo salvo6 = new Salvo(2, Arrays.asList("D1", "D2", "D3"));
+            Salvo salvo7 = new Salvo(1, Arrays.asList("F8", "F9", "F10"));
+            Salvo salvo8 = new Salvo(2, Arrays.asList("A3", "B3", "C3"));
             gamePlayer1.addSalvo(salvo3);
             gamePlayer1.addSalvo(salvo4);
             gamePlayer2.addSalvo(salvo1);
@@ -167,30 +121,55 @@ public class SalvoApplication {
             gamePlayer3.addSalvo(salvo8);
             gamePlayer4.addSalvo(salvo5);
             gamePlayer4.addSalvo(salvo6);
+            /**##########################*/
+            /**INSTANCE SCORE*/
+            /**##########################*/
+            Score score1 = new Score(gamePlayer1, 1.00);
+            Score score2 = new Score(gamePlayer2, 0.00);
+            Score score3 = new Score(gamePlayer3, 0.50);
+            Score score4 = new Score(gamePlayer4, 0.50);
+            Score score5 = new Score(gamePlayer5, 1.00);
+            Score score6 = new Score(gamePlayer6, 0.00);
+            Score score7 = new Score(gamePlayer7, 1.00);
+            Score score8 = new Score(gamePlayer8, 0.00);
 
-
-            hit1.loadHitLocationsBySalvo(salvo1);
-            hit2.loadHitLocationsBySalvo(salvo2);
-            hit3.loadHitLocationsBySalvo(salvo3);
-            hit4.loadHitLocationsBySalvo(salvo4);
-            hit5.loadHitLocationsBySalvo(salvo5);
-            hit6.loadHitLocationsBySalvo(salvo6);
-            hit7.loadHitLocationsBySalvo(salvo7);
-            hit8.loadHitLocationsBySalvo(salvo8);
-
-
-
+            /**##########################*/
+            /**INSTANCE HITS*/
+            /**##########################*/
+//            Hit hit1 = new Hit(salvo1, gamePlayer1);
+//            Hit hit2 = new Hit(salvo2, gamePlayer1);
+//            Hit hit3 = new Hit(salvo3, gamePlayer2);
+//            Hit hit4 = new Hit(salvo4, gamePlayer2);
+//            Hit hit5 = new Hit(salvo5, gamePlayer3);
+//            Hit hit6 = new Hit(salvo6, gamePlayer3);
+//            Hit hit7 = new Hit(salvo7, gamePlayer4);
+//            Hit hit8 = new Hit(salvo8, gamePlayer4);
+//            hit1.loadHitLocationsBySalvo(salvo1);
+//            hit2.loadHitLocationsBySalvo(salvo2);
+//            hit3.loadHitLocationsBySalvo(salvo3);
+//            hit4.loadHitLocationsBySalvo(salvo4);
+//            hit5.loadHitLocationsBySalvo(salvo5);
+//            hit6.loadHitLocationsBySalvo(salvo6);
+//            hit7.loadHitLocationsBySalvo(salvo7);
+//            hit8.loadHitLocationsBySalvo(salvo8);
+            /**##########################*/
+            /**PERSISTING PLAYERS*/
+            /**##########################*/
             playerRepository.save(player1);
             playerRepository.save(player2);
             playerRepository.save(player3);
             playerRepository.save(player4);
-
+            /**##########################*/
+            /**PERSISTING GAMES*/
+            /**##########################*/
             gameRepository.save(game1);
             gameRepository.save(game2);
             gameRepository.save(game3);
             gameRepository.save(game4);
             gameRepository.save(game5);
-
+            /**##########################*/
+            /**PERSISTING GAMEPLAYERS*/
+            /**##########################*/
             gamePlayerRepository.save(gamePlayer1);
             gamePlayerRepository.save(gamePlayer2);
             gamePlayerRepository.save(gamePlayer3);
@@ -202,7 +181,9 @@ public class SalvoApplication {
             gamePlayerRepository.save(gamePlayer9);
             gamePlayerRepository.save(gamePlayer10);
 
-
+            /**##########################*/
+            /**PERSISTING SHIPS*/
+            /**##########################*/
             shipRepository.save(ship1);
             shipRepository.save(ship2);
             shipRepository.save(ship3);
@@ -211,7 +192,9 @@ public class SalvoApplication {
             shipRepository.save(ship6);
             shipRepository.save(ship7);
             shipRepository.save(ship8);
-
+            /**##########################*/
+            /**PERSISTING SALVOES*/
+            /**##########################*/
             salvoRepository.save(salvo1);
             salvoRepository.save(salvo2);
             salvoRepository.save(salvo3);
@@ -220,8 +203,9 @@ public class SalvoApplication {
             salvoRepository.save(salvo6);
             salvoRepository.save(salvo7);
             salvoRepository.save(salvo8);
-
-
+            /**##########################*/
+            /**PERSISTING SCORES*/
+            /**##########################*/
             scoreRepository.save(score1);
             scoreRepository.save(score2);
             scoreRepository.save(score3);
@@ -230,18 +214,17 @@ public class SalvoApplication {
             scoreRepository.save(score6);
             scoreRepository.save(score7);
             scoreRepository.save(score8);
-//            scoreRepository.save(score9);
-//            scoreRepository.save(score10);
-
-
-            hitRepository.save(hit1);
-            hitRepository.save(hit2);
-            hitRepository.save(hit3);
-            hitRepository.save(hit4);
-            hitRepository.save(hit5);
-            hitRepository.save(hit6);
-            hitRepository.save(hit7);
-            hitRepository.save(hit8);
+            /**##########################*/
+            /**PERSISTING HITS*/
+            /**##########################*/
+//            hitRepository.save(hit1);
+//            hitRepository.save(hit2);
+//            hitRepository.save(hit3);
+//            hitRepository.save(hit4);
+//            hitRepository.save(hit5);
+//            hitRepository.save(hit6);
+//            hitRepository.save(hit7);
+//            hitRepository.save(hit8);
         };
     }
 }

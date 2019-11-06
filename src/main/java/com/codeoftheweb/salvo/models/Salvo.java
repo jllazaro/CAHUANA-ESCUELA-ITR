@@ -3,6 +3,7 @@ package com.codeoftheweb.salvo.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,9 @@ public class Salvo {
     private GamePlayer gamePlayer;
     private Integer turn;
     @ElementCollection
-    private List<String> salvoLocations;
+    private List<String> salvoLocations = new ArrayList<>();
+    @ElementCollection
+    private List<String> hitLocations = new ArrayList<>();
 
     public Salvo() {
     }
@@ -70,4 +73,56 @@ public class Salvo {
     }
 
 
+    public Map<String, Object> makeDTOofHit() {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+//        dto.put("turn", "esta vacio");
+        dto.put("turn", this.turn);
+        dto.put("hitLocations", this.getHitLocations());
+        dto.put("damages", this.damages());
+        dto.put("missed", getSalvoLocations().size() - hitLocations.size());
+        return dto;
+    }
+
+    public Map<String, Object> damages() {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+        dto.put("carrierHits", gamePlayer.hitsByTypeShip(this, "carrier"));
+        dto.put("battleshipHits", gamePlayer.hitsByTypeShip(this, "battleship"));
+        dto.put("submarineHits", gamePlayer.hitsByTypeShip(this, "submarine"));
+        dto.put("destroyerHits", gamePlayer.hitsByTypeShip(this, "destroyer"));
+        dto.put("patrolboatHits", gamePlayer.hitsByTypeShip(this, "patrolboat"));
+        dto.put("carrier", gamePlayer.totalHitsByTypeShip("carrier", this.getTurn()));
+        dto.put("battleship", gamePlayer.totalHitsByTypeShip("battleship", this.getTurn()));
+        dto.put("submarine", gamePlayer.totalHitsByTypeShip("submarine", this.getTurn()));
+        dto.put("destroyer", gamePlayer.totalHitsByTypeShip("destroyer", this.getTurn()));
+        dto.put("patrolboat", gamePlayer.totalHitsByTypeShip("patrolboat", this.getTurn()));
+        return dto;
+    }
+
+    public void loadHitLocationsBySalvo() {
+        this.getSalvoLocations().stream().forEach(
+                position ->
+                {
+                    gamePlayer.opponent().getShips().stream().forEach(
+                            ship ->
+                            {
+                                ship.getLocations().stream().forEach(
+                                        positionShip ->
+                                        {
+                                            if (position.equals(positionShip)) {
+                                                getHitLocations().add(position);
+                                            }
+                                        });
+                            }
+                    );
+                }
+        );
+    }
+
+    public List<String> getHitLocations() {
+        return hitLocations;
+    }
+
+    public void setHitLocations(List<String> hitLocations) {
+        this.hitLocations = hitLocations;
+    }
 }

@@ -25,48 +25,6 @@ public class Game {
     public Game() {
     }
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public Set<GamePlayer> getGamePlayers() {
-        return gamePlayers;
-    }
-
-    public Map<String, Object> makeGameDTO() {
-        Map<String, Object> dto = new LinkedHashMap<String, Object>();
-        dto.put("id", this.getId());
-        dto.put("created", this.getCreationDate());
-        dto.put("gamePlayers", this.getGamePlayers().stream().map(gp -> gp.makeGamePlayerDTO()));
-        dto.put("scores", this.getGamePlayers().stream().map(gp -> gp.getScore() != null ? gp.getScore().makeDTO() : ""));
-        return dto;
-    }
-
-    public Score getScore(Game game) {
-        return scores.stream()
-                .filter(score -> score.getGame().getId() == game.getId())
-                .findFirst().orElse(null);
-    }
-    public Map<String, Object> makeGameDTO_gameViewWithSalvoes(GamePlayer gamePlayer) {
-        Map<String, Object> dto = new LinkedHashMap<String, Object>();
-        dto.put("id", this.getId());
-        dto.put("created", this.getCreationDate());
-        dto.put("gameState", this.state(gamePlayer));
-        dto.put("gamePlayers", this.getGamePlayers().stream().map(gp -> gp.makeGamePlayerDTO()));
-        dto.put("ships", gamePlayer.getShips().stream().map(ship -> ship.makeShipDTO()));
-        dto.put("salvoes", getGamePlayers().stream().flatMap(aGamePlayer -> aGamePlayer.getSalvoes().stream().map(salvo -> salvo.makeSalvoDTO())));
-        dto.put("hits", this.hits(gamePlayer));
-        return dto;
-    }
-
     public String state(GamePlayer gamePlayerLogged) {
         Integer maxTurns = 101;
 
@@ -102,12 +60,58 @@ public class Game {
         return "WAIT";
     }
 
-    private Map<String, Object> hits(GamePlayer gamePlayer) {
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Set<GamePlayer> getGamePlayers() {
+        return gamePlayers;
+    }
+
+    public Map<String, Object> makeGameDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
-        dto.put("self", gamePlayer.getHits().stream().sorted(Comparator.comparingInt(Hit::getTurn)).map(hit -> hit.makeDTO()));
-        if (gamePlayerOpponent(gamePlayer) != null) {
-            dto.put("opponent", gamePlayerOpponent(gamePlayer).getHits().stream().sorted(Comparator.comparingInt(Hit::getTurn)).map(hit -> hit.makeDTO()));
+        dto.put("id", this.getId());
+        dto.put("created", this.getCreationDate());
+        dto.put("gamePlayers", this.getGamePlayers().stream().map(gp -> gp.makeGamePlayerDTO()));
+        dto.put("scores", this.getGamePlayers().stream().map(gp -> gp.getScore() != null ? gp.getScore().makeDTO() : ""));
+        return dto;
+    }
+
+    public Score getScore(Game game) {
+        return scores.stream()
+                .filter(score -> score.getGame().getId() == game.getId())
+                .findFirst().orElse(null);
+    }
+
+    public Map<String, Object> makeGameDTO_gameViewWithSalvoes(GamePlayer gamePlayer) {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+        dto.put("id", this.getId());
+        dto.put("created", this.getCreationDate());
+        dto.put("gameState", this.state(gamePlayer));
+        dto.put("gamePlayers", this.getGamePlayers().stream().map(gp -> gp.makeGamePlayerDTO()));
+        dto.put("ships", gamePlayer.getShips().stream().map(ship -> ship.makeShipDTO()));
+        dto.put("salvoes", getGamePlayers().stream().flatMap(aGamePlayer -> aGamePlayer.getSalvoes().stream().map(salvo -> salvo.makeSalvoDTO())));
+        dto.put("hits", this.hits(gamePlayer));
+        return dto;
+    }
+
+    private Map<String, Object> hits(GamePlayer logged) {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+//        dto.put("self", logged.getHits().stream().sorted(Comparator.comparingInt(Hit::getTurn)).map(hit -> hit.makeDTO()));
+        if (gamePlayerOpponent(logged) != null) {
+            dto.put("self", logged.opponent().getSalvoes().stream().sorted(Comparator.comparingInt(Salvo::getTurn)).map(salvoOpp -> salvoOpp.makeDTOofHit()));
+
+            dto.put("opponent", logged.getSalvoes().stream().sorted(Comparator.comparingInt(Salvo::getTurn)).map(salvo-> salvo.makeDTOofHit()));
         } else {
+            dto.put("self", new ArrayList<>());
             dto.put("opponent", new ArrayList<>());
         }
         return dto;
@@ -117,7 +121,6 @@ public class Game {
         return gamePlayers.size() > 1 ? this.getGamePlayers().stream().filter(gp -> (gp.getPlayer().getUserName() != gamePlayer.getPlayer().getUserName())).findFirst().get() : null;
 
     }
-
 
 
     public void setId(long id) {

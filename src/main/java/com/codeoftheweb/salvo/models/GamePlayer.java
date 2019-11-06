@@ -28,8 +28,8 @@ public class GamePlayer {
     private Set<Ship> ships = new HashSet<>();
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
     private Set<Salvo> salvoes = new HashSet<>();
-    @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
-    private Set<Hit> hits = new HashSet<>();
+//    @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
+//    private Set<Hit> hits = new HashSet<>();
 
     public GamePlayer() {
     }
@@ -112,22 +112,22 @@ public class GamePlayer {
         return this.salvoes.stream().anyMatch(salvo -> salvo.getTurn() == turn);
     }
 
-    public Set<Hit> getHits() {
-        return hits;
-    }
-
-    public void setHits(Set<Hit> hits) {
-        this.hits = hits;
-    }
+//    public Set<Hit> getHits() {
+//        return hits;
+//    }
+//
+//    public void setHits(Set<Hit> hits) {
+//        this.hits = hits;
+//    }
 
     public int totalHitsByTypeShip(String type, Integer turn) {
 
         AtomicReference<Integer> count = new AtomicReference<>(0);
-        this.hits.stream().forEach(
-                hit -> {
-                    if (hit.getTurn() <= turn) {
+        this.salvoes.stream().forEach(
+                salvo -> {
+                    if (salvo.getTurn() <= turn) {
 
-                        count.updateAndGet(v -> v + (hitsByTypeShip(hit, type)));
+                        count.updateAndGet(v -> v + (hitsByTypeShip(salvo, type)));
                     }
                 }
         );
@@ -135,14 +135,14 @@ public class GamePlayer {
 
     }
 
-    public int hitsByTypeShip(Hit hit, String type) {
+    public int hitsByTypeShip(Salvo salvo, String type) {
 
         AtomicInteger count = new AtomicInteger();
         this.shipsOfType(type).stream().forEach(
                 ship -> {
                     ship.getLocations().stream().forEach(
                             shipLocation -> {
-                                hit.getLocations().stream().forEach(
+                                salvo.getSalvoLocations().stream().forEach(
                                         hitLocation -> {
                                             if (shipLocation.equals(hitLocation)) {
                                                 count.getAndIncrement();
@@ -178,10 +178,10 @@ public class GamePlayer {
     public List<List<String>> shipsLocations() {
         return this.ships.stream().map(ship -> ship.getLocations()).collect(Collectors.toList());
     }
-
-    public void addHit(Hit hit) {
-        hits.add(hit);
-    }
+//
+//    public void addHit(Hit hit) {
+//        hits.add(hit);
+//    }
 
     public GamePlayer opponent() {
         return getGame().gamePlayerOpponent(this);

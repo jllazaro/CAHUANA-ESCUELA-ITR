@@ -1,7 +1,6 @@
 package com.codeoftheweb.salvo.controllers;
 
 import com.codeoftheweb.salvo.models.GamePlayer;
-import com.codeoftheweb.salvo.models.Hit;
 import com.codeoftheweb.salvo.models.Salvo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +28,7 @@ public class GamePlayerSalvoesController extends ControllerInit {
 
         salvo.setGamePlayer(gamePLayer);
         salvo.setTurn(gamePLayer.getSalvoes().size() + 1);
+        salvo.loadHitLocationsBySalvo();
 
         if (isGuest(authentication) || authentication.getName() != gamePLayer.getPlayer().getUserName() || gamePLayer.equals(null)) {
             return new ResponseEntity<>(makeMap("error", "ERROR DE VALIDACION DE DATOS"), HttpStatus.UNAUTHORIZED);
@@ -45,11 +45,11 @@ public class GamePlayerSalvoesController extends ControllerInit {
         if (salvo.getSalvoLocations().size() > 5) {
             return new ResponseEntity<>(makeMap("error", "NO PUEDE ENVIAR MAS DE 5 SALVOS"), HttpStatus.FORBIDDEN);
         }
-        Hit hit = new Hit(salvo, gamePLayer.opponent());
-        hit.loadHitLocationsBySalvo(salvo);
-        hit.setMissed(salvo.getSalvoLocations().size() - hit.getLocations().size());
+//        Hit hit = new Hit(salvo, gamePLayer.opponent());
+//        hit.loadHitLocationsBySalvo(salvo);
+//        hit.setMissed(salvo.getSalvoLocations().size() - hit.getLocations().size());
         salvoRepository.save(salvo);
-        hitRepository.save(hit);
+//        hitRepository.save(hit);
         gamePlayerRepository.save(gamePLayer);
 
         return new ResponseEntity<>(makeMap("OK", "OK"), HttpStatus.CREATED);

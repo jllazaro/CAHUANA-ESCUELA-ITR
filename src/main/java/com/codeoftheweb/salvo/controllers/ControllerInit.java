@@ -25,8 +25,8 @@ public class ControllerInit {
     protected GamePlayerRepository gamePlayerRepository;
     @Autowired
     protected SalvoRepository salvoRepository;
-    @Autowired
-    protected HitRepository hitRepository;
+//    @Autowired
+//    protected HitRepository hitRepository;
     @Autowired
     ScoreRepository scoreRepository;
 
