@@ -81,7 +81,7 @@ public class GamePlayer {
 
     public Score getScore() {
         return
-                game.getScore(this.getGame());
+                player.getScore(this.getGame());
     }
 
     public void setId(long id) {

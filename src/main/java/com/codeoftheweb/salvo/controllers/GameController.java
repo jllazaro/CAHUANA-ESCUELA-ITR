@@ -3,6 +3,7 @@ package com.codeoftheweb.salvo.controllers;
 import com.codeoftheweb.salvo.models.Game;
 import com.codeoftheweb.salvo.models.GamePlayer;
 import com.codeoftheweb.salvo.models.Player;
+import com.codeoftheweb.salvo.models.Score;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -79,6 +80,16 @@ public class GameController extends ControllerInit {
             return new ResponseEntity<>(makeMap("error", "NO TIENE PERMISO"), HttpStatus.FORBIDDEN);
         }
         Game gameAux = gameRepository.findById(gamePlayer.getGame().getId()).get();
+
+        if (gamePlayer.getGame().state(gamePlayer) == "WON"        ) {
+                    scoreRepository.save(new Score(gamePlayer, 1.00));
+        }
+        if (gamePlayer.getGame().state(gamePlayer) == "TIE"        ) {
+            scoreRepository.save(new Score(gamePlayer, 0.50));
+        }
+        if (gamePlayer.getGame().state(gamePlayer) == "LOST"        ) {
+            scoreRepository.save(new Score(gamePlayer, 0.00));
+        }
         return new ResponseEntity<>(gameAux.makeGameDTO_gameViewWithSalvoes(gamePlayer), HttpStatus.ACCEPTED);
 
     }

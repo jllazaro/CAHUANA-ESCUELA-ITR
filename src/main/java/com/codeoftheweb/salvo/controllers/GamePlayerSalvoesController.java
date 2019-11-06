@@ -37,11 +37,6 @@ public class GamePlayerSalvoesController extends ControllerInit {
                 || gamePLayer.getGame().state(gamePLayer) == "TIED"
                 || gamePLayer.getGame().state(gamePLayer) == "LOST"
         ) {
-            gamePLayer.getGame().getScores().forEach(
-                    score -> {
-                        scoreRepository.save(score);
-                    }
-            );
             return new ResponseEntity<>(makeMap("error", "EL JUEGO YA TERMINO"), HttpStatus.FORBIDDEN);
         }
         if (gamePLayer.haveSalvoWithTurn(salvo.getTurn())) {

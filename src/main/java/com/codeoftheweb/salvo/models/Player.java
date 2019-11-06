@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -19,7 +20,7 @@ public class Player {
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
     private Set<GamePlayer> gamePlayers;
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
-    private Set<Score> scores;
+    private Set<Score> scores = new HashSet<>();
     @JsonIgnore
     private String password;
 
@@ -68,8 +69,10 @@ public class Player {
         this.userName = userName;
     }
 
-    public Set<Score> getScores() {
-        return scores;
+    public Score getScore(Game game) {
+        return scores.stream()
+                .filter(score -> score.getGame().getId() == game.getId())
+                .findFirst().orElse(null);
     }
 
     public void setScores(Set<Score> scores) {
@@ -86,5 +89,9 @@ public class Player {
 
     public void addScore(Score score) {
         scores.add(score);
+    }
+
+    public Set<Score> getScores() {
+        return scores;
     }
 }

@@ -24,12 +24,15 @@ public class Score {
 
     public Score() {
     }
+
     public Score(GamePlayer gamePlayer, Double score) {
         this.game = gamePlayer.getGame();
         this.player = gamePlayer.getPlayer();
         this.score = score;
         this.finishDate = LocalDateTime.now();
+        this.setGameAndPlayer();
     }
+
     public Score(Game game, Player player, Double score, LocalDateTime finishDate) {
         this.game = game;
         this.player = player;
@@ -37,6 +40,12 @@ public class Score {
         this.finishDate = finishDate;
 //        this.game.addScore(this);
 //        this.player.addScore(this);
+    }
+
+
+    private void setGameAndPlayer() {
+        getPlayer().addScore(this);
+        getGame().addScore(this);
     }
 
     public Map<String, Object> makeDTO() {

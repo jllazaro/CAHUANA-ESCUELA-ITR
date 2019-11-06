@@ -86,7 +86,7 @@ public class Game {
                 || gamePlayerOpponent(gamePlayerLogged).shipMissedByHitTurn(maxTurns) == gamePlayerOpponent(gamePlayerLogged).getShips().size())) {
             if (gamePlayerLogged.getShips().size() == gamePlayerLogged.shipMissedByHitTurn(maxTurns)
                     && gamePlayerOpponent(gamePlayerLogged).getShips().size() == gamePlayerOpponent(gamePlayerLogged).shipMissedByHitTurn(maxTurns)) {
-                return "TIED";
+                return "TIE";
             }
             if (gamePlayerLogged.shipMissedByHitTurn(maxTurns) == gamePlayerLogged.getShips().size()) {
                 return "LOST";
