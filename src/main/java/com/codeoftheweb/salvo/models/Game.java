@@ -1,5 +1,7 @@
 package com.codeoftheweb.salvo.models;
 
+import jdk.nashorn.internal.objects.annotations.Getter;
+import jdk.nashorn.internal.objects.annotations.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -7,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
+
 public class Game {
 
     @Id
