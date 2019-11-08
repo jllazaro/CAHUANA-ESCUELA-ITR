@@ -132,68 +132,68 @@ public class SalvoApplication {
             Score score6 = new Score(gamePlayer6, 0.00);
             Score score7 = new Score(gamePlayer7, 1.00);
             Score score8 = new Score(gamePlayer8, 0.00);
-            /**##########################*/
-            /**PERSISTING PLAYERS*/
-            /**##########################*/
-            playerRepository.save(player1);
-            playerRepository.save(player2);
-            playerRepository.save(player3);
-            playerRepository.save(player4);
-            /**##########################*/
-            /**PERSISTING GAMES*/
-            /**##########################*/
-            gameRepository.save(game1);
-            gameRepository.save(game2);
-            gameRepository.save(game3);
-            gameRepository.save(game4);
-            gameRepository.save(game5);
-            /**##########################*/
-            /**PERSISTING GAMEPLAYERS*/
-            /**##########################*/
-            gamePlayerRepository.save(gamePlayer1);
-            gamePlayerRepository.save(gamePlayer2);
-            gamePlayerRepository.save(gamePlayer3);
-            gamePlayerRepository.save(gamePlayer4);
-            gamePlayerRepository.save(gamePlayer5);
-            gamePlayerRepository.save(gamePlayer6);
-            gamePlayerRepository.save(gamePlayer7);
-            gamePlayerRepository.save(gamePlayer8);
-            gamePlayerRepository.save(gamePlayer9);
-            gamePlayerRepository.save(gamePlayer10);
-
-            /**##########################*/
-            /**PERSISTING SHIPS*/
-            /**##########################*/
-            shipRepository.save(ship1);
-            shipRepository.save(ship2);
-            shipRepository.save(ship3);
-            shipRepository.save(ship4);
-            shipRepository.save(ship5);
-            shipRepository.save(ship6);
-            shipRepository.save(ship7);
-            shipRepository.save(ship8);
-            /**##########################*/
-            /**PERSISTING SALVOES*/
-            /**##########################*/
-            salvoRepository.save(salvo1);
-            salvoRepository.save(salvo2);
-            salvoRepository.save(salvo3);
-            salvoRepository.save(salvo4);
-            salvoRepository.save(salvo5);
-            salvoRepository.save(salvo6);
-            salvoRepository.save(salvo7);
-            salvoRepository.save(salvo8);
-            /**##########################*/
-            /**PERSISTING SCORES*/
-            /**##########################*/
-            scoreRepository.save(score1);
-            scoreRepository.save(score2);
-            scoreRepository.save(score3);
-            scoreRepository.save(score4);
-            scoreRepository.save(score5);
-            scoreRepository.save(score6);
-            scoreRepository.save(score7);
-            scoreRepository.save(score8);
+//            /**##########################*/
+//            /**PERSISTING PLAYERS*/
+//            /**##########################*/
+//            playerRepository.save(player1);
+//            playerRepository.save(player2);
+//            playerRepository.save(player3);
+//            playerRepository.save(player4);
+//            /**##########################*/
+//            /**PERSISTING GAMES*/
+//            /**##########################*/
+//            gameRepository.save(game1);
+//            gameRepository.save(game2);
+//            gameRepository.save(game3);
+//            gameRepository.save(game4);
+//            gameRepository.save(game5);
+//            /**##########################*/
+//            /**PERSISTING GAMEPLAYERS*/
+//            /**##########################*/
+//            gamePlayerRepository.save(gamePlayer1);
+//            gamePlayerRepository.save(gamePlayer2);
+//            gamePlayerRepository.save(gamePlayer3);
+//            gamePlayerRepository.save(gamePlayer4);
+//            gamePlayerRepository.save(gamePlayer5);
+//            gamePlayerRepository.save(gamePlayer6);
+//            gamePlayerRepository.save(gamePlayer7);
+//            gamePlayerRepository.save(gamePlayer8);
+//            gamePlayerRepository.save(gamePlayer9);
+//            gamePlayerRepository.save(gamePlayer10);
+//
+//            /**##########################*/
+//            /**PERSISTING SHIPS*/
+//            /**##########################*/
+//            shipRepository.save(ship1);
+//            shipRepository.save(ship2);
+//            shipRepository.save(ship3);
+//            shipRepository.save(ship4);
+//            shipRepository.save(ship5);
+//            shipRepository.save(ship6);
+//            shipRepository.save(ship7);
+//            shipRepository.save(ship8);
+//            /**##########################*/
+//            /**PERSISTING SALVOES*/
+//            /**##########################*/
+//            salvoRepository.save(salvo1);
+//            salvoRepository.save(salvo2);
+//            salvoRepository.save(salvo3);
+//            salvoRepository.save(salvo4);
+//            salvoRepository.save(salvo5);
+//            salvoRepository.save(salvo6);
+//            salvoRepository.save(salvo7);
+//            salvoRepository.save(salvo8);
+//            /**##########################*/
+//            /**PERSISTING SCORES*/
+//            /**##########################*/
+//            scoreRepository.save(score1);
+//            scoreRepository.save(score2);
+//            scoreRepository.save(score3);
+//            scoreRepository.save(score4);
+//            scoreRepository.save(score5);
+//            scoreRepository.save(score6);
+//            scoreRepository.save(score7);
+//            scoreRepository.save(score8);
         };
     }
 }
