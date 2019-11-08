@@ -28,7 +28,7 @@ public class GamePlayerSalvoesController extends ControllerInit {
 
         salvo.setGamePlayer(gamePLayer);
         salvo.setTurn(gamePLayer.getSalvoes().size() + 1);
-        salvo.loadHitLocationsBySalvo();
+        salvo.hitLocations();
 
         if (isGuest(authentication) || authentication.getName() != gamePLayer.getPlayer().getUserName() || gamePLayer.equals(null)) {
             return new ResponseEntity<>(makeMap("error", "ERROR DE VALIDACION DE DATOS"), HttpStatus.UNAUTHORIZED);

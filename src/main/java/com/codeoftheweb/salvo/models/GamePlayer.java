@@ -106,7 +106,7 @@ public class GamePlayer {
 
     public int totalHitsByTypeShip(String type, Integer turn) {
         AtomicReference<Integer> count = new AtomicReference<>(0);
-        this.salvoes.stream().forEach(
+        this.opponent().salvoes.stream().forEach(
                 salvo -> {
                     if (salvo.getTurn() <= turn) {
                         count.updateAndGet(v -> v + (hitsByTypeShip(salvo, type)));

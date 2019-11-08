@@ -20,8 +20,8 @@ public class Salvo {
     private Integer turn;
     @ElementCollection
     private List<String> salvoLocations = new ArrayList<>();
-    @ElementCollection
-    private List<String> hitLocations = new ArrayList<>();
+//    @ElementCollection
+//    private List<String> hitLocations = new ArrayList<>();
 
     public Salvo() {
     }
@@ -71,31 +71,33 @@ public class Salvo {
         this.salvoLocations = salvoLocations;
     }
 
-    public Map<String, Object> makeDTOofHit() {
+    public Map<String, Object> makeDTOofHit(GamePlayer gamePlayerOpponent) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("turn", this.turn);
-        dto.put("hitLocations", this.getHitLocations());
-        dto.put("damages", this.damages());
-        dto.put("missed", getSalvoLocations().size() - hitLocations.size());
+        dto.put("hitLocations", this.hitLocations());
+        dto.put("damages", this.damages(gamePlayerOpponent));
+        dto.put("missed", getSalvoLocations().size() - hitLocations().size());
         return dto;
     }
 
-    public Map<String, Object> damages() {
+    public Map<String, Object> damages(GamePlayer gamePlayerOpponent) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
-        dto.put("carrierHits", gamePlayer.hitsByTypeShip(this, "carrier"));
-        dto.put("battleshipHits", gamePlayer.hitsByTypeShip(this, "battleship"));
-        dto.put("submarineHits", gamePlayer.hitsByTypeShip(this, "submarine"));
-        dto.put("destroyerHits", gamePlayer.hitsByTypeShip(this, "destroyer"));
-        dto.put("patrolboatHits", gamePlayer.hitsByTypeShip(this, "patrolboat"));
-        dto.put("carrier", gamePlayer.totalHitsByTypeShip("carrier", this.getTurn()));
-        dto.put("battleship", gamePlayer.totalHitsByTypeShip("battleship", this.getTurn()));
-        dto.put("submarine", gamePlayer.totalHitsByTypeShip("submarine", this.getTurn()));
-        dto.put("destroyer", gamePlayer.totalHitsByTypeShip("destroyer", this.getTurn()));
-        dto.put("patrolboat", gamePlayer.totalHitsByTypeShip("patrolboat", this.getTurn()));
+        dto.put("carrierHits", gamePlayerOpponent.hitsByTypeShip(this, "carrier"));
+        dto.put("battleshipHits", gamePlayerOpponent.hitsByTypeShip(this, "battleship"));
+        dto.put("submarineHits", gamePlayerOpponent.hitsByTypeShip(this, "submarine"));
+        dto.put("destroyerHits", gamePlayerOpponent.hitsByTypeShip(this, "destroyer"));
+        dto.put("patrolboatHits", gamePlayerOpponent.hitsByTypeShip(this, "patrolboat"));
+        dto.put("carrier", gamePlayerOpponent.totalHitsByTypeShip("carrier", this.getTurn()));
+        dto.put("battleship", gamePlayerOpponent.totalHitsByTypeShip("battleship", this.getTurn()));
+        dto.put("submarine", gamePlayerOpponent.totalHitsByTypeShip("submarine", this.getTurn()));
+        dto.put("destroyer", gamePlayerOpponent.totalHitsByTypeShip("destroyer", this.getTurn()));
+        dto.put("patrolboat", gamePlayerOpponent.totalHitsByTypeShip("patrolboat", this.getTurn()));
         return dto;
     }
 
-    public void loadHitLocationsBySalvo() {
+    public List<String> hitLocations() {
+
+        List<String> hitLocations= new ArrayList<>();
         this.getSalvoLocations().stream().forEach(
                 position ->
                 {
@@ -106,20 +108,18 @@ public class Salvo {
                                         positionShip ->
                                         {
                                             if (position.equals(positionShip)) {
-                                                getHitLocations().add(position);
+                                                hitLocations.add(position);
                                             }
                                         });
                             }
                     );
                 }
         );
-    }
-
-    public List<String> getHitLocations() {
         return hitLocations;
     }
+//
+//    public List<String> getHitLocations() {
+//        return hitLocations;
+//    }
 
-    public void setHitLocations(List<String> hitLocations) {
-        this.hitLocations = hitLocations;
-    }
 }

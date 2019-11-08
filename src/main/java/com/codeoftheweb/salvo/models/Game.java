@@ -105,9 +105,9 @@ public class Game {
     private Map<String, Object> hits(GamePlayer logged) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         if (gamePlayerOpponent(logged) != null) {
-            dto.put("self", logged.opponent().getSalvoes().stream().sorted(Comparator.comparingInt(Salvo::getTurn)).map(salvoOpp -> salvoOpp.makeDTOofHit()));
+            dto.put("self", logged.opponent().getSalvoes().stream().sorted(Comparator.comparingInt(Salvo::getTurn)).map(salvoOpp -> salvoOpp.makeDTOofHit(logged)));
 
-            dto.put("opponent", logged.getSalvoes().stream().sorted(Comparator.comparingInt(Salvo::getTurn)).map(salvo -> salvo.makeDTOofHit()));
+            dto.put("opponent", logged.getSalvoes().stream().sorted(Comparator.comparingInt(Salvo::getTurn)).map(salvo -> salvo.makeDTOofHit(logged.opponent())));
         } else {
             dto.put("self", new ArrayList<>());
             dto.put("opponent", new ArrayList<>());
