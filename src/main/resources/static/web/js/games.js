@@ -35,6 +35,7 @@ $('#login-form').on('submit', function (event) {
                 $("#password").val("");
                 $("#username").focus();
                 // $('#loginFailed').hide( "slow" );
+
             })
             .always(function() {
 
@@ -47,6 +48,7 @@ $('#login-form').on('submit', function (event) {
             .done(function(data) {
                 console.log("signup ok");
                 console.log(data);
+                $("#createGameForm").show();
                 $('#signupSuccess').show( "slow" ).delay(2000).hide( "slow" );
                 $.post("/api/login",
                     { name: $("#username").val(),
