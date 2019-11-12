@@ -30,6 +30,7 @@ public class GamePlayerSalvoesController extends ControllerInit {
         salvo.setTurn(gamePLayer.getSalvoes().size() + 1);
         salvo.hitLocations();
 
+
         if (isGuest(authentication) || authentication.getName() != gamePLayer.getPlayer().getUserName() || gamePLayer.equals(null)) {
             return new ResponseEntity<>(makeMap("error", "ERROR DE VALIDACION DE DATOS"), HttpStatus.UNAUTHORIZED);
         }
@@ -45,6 +46,7 @@ public class GamePlayerSalvoesController extends ControllerInit {
         if (salvo.getSalvoLocations().size() > 5) {
             return new ResponseEntity<>(makeMap("error", "NO PUEDE ENVIAR MAS DE 5 SALVOS"), HttpStatus.FORBIDDEN);
         }
+        gamePLayer.addSalvo(salvo);
         salvoRepository.save(salvo);
         gamePlayerRepository.save(gamePLayer);
         return new ResponseEntity<>(makeMap("OK", "OK"), HttpStatus.CREATED);

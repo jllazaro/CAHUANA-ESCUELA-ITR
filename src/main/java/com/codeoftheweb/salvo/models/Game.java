@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 
@@ -32,28 +33,28 @@ public class Game {
         ) {
             return "PLACESHIPS";
         }
-        if (gamePlayerOpponent(gamePlayerLogged) == null || gamePlayerOpponent(gamePlayerLogged).getShips().isEmpty()) {
+        if (gamePlayerLogged.opponent() == null || gamePlayerLogged.opponent().getShips().isEmpty()) {
             return "WAITINGFOROPP";
         }
-        if (gamePlayerLogged.getSalvoes().isEmpty() || gamePlayerOpponent(gamePlayerLogged).getSalvoes().isEmpty()) {
+        if (gamePlayerLogged.getSalvoes().isEmpty() && gamePlayerLogged.opponent().getSalvoes().isEmpty()) {
             return "PLAY";
         }
-        if (gamePlayerLogged.getSalvoes().size() == gamePlayerOpponent(gamePlayerLogged).getSalvoes().size()
+        if (gamePlayerLogged.getSalvoes().size() == gamePlayerLogged.opponent().getSalvoes().size()
                 && (gamePlayerLogged.shipMissedByHitTurn(maxTurns) == gamePlayerLogged.getShips().size()
-                || gamePlayerOpponent(gamePlayerLogged).shipMissedByHitTurn(maxTurns) == gamePlayerOpponent(gamePlayerLogged).getShips().size())) {
+                || gamePlayerLogged.opponent().shipMissedByHitTurn(maxTurns) == gamePlayerLogged.opponent().getShips().size())) {
             if (gamePlayerLogged.getShips().size() == gamePlayerLogged.shipMissedByHitTurn(maxTurns)
-                    && gamePlayerOpponent(gamePlayerLogged).getShips().size() == gamePlayerOpponent(gamePlayerLogged).shipMissedByHitTurn(maxTurns)) {
+                    && gamePlayerLogged.opponent().getShips().size() == gamePlayerLogged.opponent().shipMissedByHitTurn(maxTurns)) {
                 return "TIE";
             }
             if (gamePlayerLogged.shipMissedByHitTurn(maxTurns) == gamePlayerLogged.getShips().size()) {
                 return "LOST";
             }
 
-            if (gamePlayerOpponent(gamePlayerLogged).shipMissedByHitTurn(maxTurns) == gamePlayerOpponent(gamePlayerLogged).getShips().size()) {
+            if (gamePlayerLogged.opponent().shipMissedByHitTurn(maxTurns) == gamePlayerLogged.opponent().getShips().size()) {
                 return "WON";
             }
         }
-        if (gamePlayerLogged.getSalvoes().size() <= gamePlayerOpponent(gamePlayerLogged).getSalvoes().size()) {
+        if (gamePlayerLogged.getSalvoes().size() <= gamePlayerLogged.opponent().getSalvoes().size()) {
             return "PLAY";
         }
         return "WAIT";
